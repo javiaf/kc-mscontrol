@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tikal.mscontrol</groupId>
+	<artifactId>tk-mscontrol</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<name>MSControl API</name>
+	<description>Media Server Control API for the Java Platform based on jsr309</description>
+	<url>http://193.147.51.37/site/tk-mscontrol</url>
+	
+	
+	<distributionManagement>
+		<site>
+			<id>maven-site</id>
+			<url>scp://193.147.51.37/var/www/site/tk-mscontrol/${project.version}</url>
+		</site>
+	</distributionManagement>
+	
+</project>
