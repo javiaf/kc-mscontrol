@@ -1,5 +1,8 @@
 package com.tikal.mscontrol;
 
+/**
+ * Definition of the most common errors, as MediaErr instances.
+ */
 public interface MediaErr {
 
 	static final MediaErr BAD_ARG = new MediaErr(){};
@@ -7,6 +10,10 @@ public interface MediaErr {
 	static final MediaErr BUSY = new MediaErr(){};
 	static final MediaErr CALL_DROPPED = new MediaErr(){};
 	static final MediaErr INFINITE_LOOP = new MediaErr(){};
+	
+	/**
+	 * Indicates success: there was no error.
+	 */
 	static final MediaErr NO_ERROR = new MediaErr(){};
 	static final MediaErr NO_TERMINATION = new MediaErr(){};
 	static final MediaErr NOT_FOUND = new MediaErr(){};

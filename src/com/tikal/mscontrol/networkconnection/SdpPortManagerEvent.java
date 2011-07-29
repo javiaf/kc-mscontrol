@@ -6,12 +6,9 @@ import com.tikal.mscontrol.MediaEvent;
 
 /**
  * An event from a SdpPortManager.
+ * <p>
  * 
  * The EventType indicates which operation completed.
- * 
- * The Qualifier may return additional information about how/why the operation
- * terminated, else it is set to ResourceEvent.NO_QUALIFIER. More specific
- * Qualifiers are listed below.
  */
 public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 
@@ -70,6 +67,9 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	static final EventType UNSOLICITED_OFFER_GENERATED = new EventType() {
 	};
 
+	/**
+	 * Returns the most recent Media Server Session Description.
+	 */
 	byte[] getMediaServerSdp();
 
 }

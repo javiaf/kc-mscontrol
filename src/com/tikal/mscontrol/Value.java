@@ -1,6 +1,8 @@
 package com.tikal.mscontrol;
 
-
-public interface Value<R extends MediaObject> {
+/**
+ * A Value is a designator for a particular (enumerated) value of a Parameter.
+ */
+public interface Value {
 
 }

@@ -4,11 +4,8 @@ import com.tikal.mscontrol.mediacomponent.MediaComponent;
 import com.tikal.mscontrol.networkconnection.NetworkConnection;
 
 /**
- * <p>
  * A MediaSession is a container and factory for media objects. It handles the
  * cleanup on <code>release()</code>.
- * 
- * </p>
  * 
  * @author Miguel París Díaz
  * 
@@ -16,9 +13,7 @@ import com.tikal.mscontrol.networkconnection.NetworkConnection;
 public interface MediaSession extends MediaObject {
 
 	/**
-	 * </p> Create a NetworkConnection.
-	 * 
-	 * </p>
+	 * Create a NetworkConnection.
 	 * 
 	 * @return a NetworkConnection
 	 * @throws MsControlException
@@ -27,8 +22,6 @@ public interface MediaSession extends MediaObject {
 
 	/**
 	 * </p> Create a MediaComponent.
-	 * 
-	 * </p>
 	 * 
 	 * @param predefinedConfig
 	 *            Defines the concrete MediaComponent to create. <br>

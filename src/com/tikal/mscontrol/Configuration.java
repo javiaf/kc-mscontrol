@@ -1,10 +1,7 @@
 package com.tikal.mscontrol;
 
 /**
- * 
- * @author Miguel París Díaz
- * 
- * @param <R>
+ * A Configuration designates a particular instance of MediaObject.
  */
 public interface Configuration<R extends MediaObject> {
 

@@ -4,14 +4,25 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is a Map of (Parameter=value) pairs. Each key identifies a
+ * Parameter, and the Map provides its value.
+ * <p>
+ * <b>Note:</b> The value may be an instance of Value, for an enumerated
+ * Parameter, or any other java Object, for a non-enumerated Parameter.<br>
+ * This is indicated in each Parameter <b>documentation</b>.
+ */
 public interface Parameters extends Map<Parameter, Object> {
-	
+
+	/**
+	 * A typed constant to use when no parameter is required.
+	 */
 	public static final Parameters NO_PARAMETER = new Parameters() {
 
 		@Override
 		public void clear() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -59,7 +70,7 @@ public interface Parameters extends Map<Parameter, Object> {
 		@Override
 		public void putAll(Map<? extends Parameter, ? extends Object> arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -78,5 +89,6 @@ public interface Parameters extends Map<Parameter, Object> {
 		public Collection<Object> values() {
 			// TODO Auto-generated method stub
 			return null;
-		}};
+		}
+	};
 }
