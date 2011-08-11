@@ -8,7 +8,19 @@
 	<name>MSControl API</name>
 	<description>Media Server Control API for the Java Platform based on jsr309</description>
 	<url>http://193.147.51.37/site/tk-mscontrol</url>
-	
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	
 	<distributionManagement>
 		<site>
