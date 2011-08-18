@@ -7,7 +7,7 @@
 	
 	<name>MSControl API</name>
 	<description>Media Server Control API for the Java Platform based on jsr309</description>
-	<url>http://193.147.51.37/site/tk-mscontrol</url>
+	<url>https://repository.kurento.com/site/tk-mscontrol</url>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -25,7 +25,7 @@
 	<distributionManagement>
 		<site>
 			<id>maven-site</id>
-			<url>scp://193.147.51.37/var/www/site/tk-mscontrol/${project.version}</url>
+			<url>scp://repository.kurento.com/var/www/kurento/site/tk-mscontrol/${project.version}</url>
 		</site>
 	</distributionManagement>
 	
