@@ -1,4 +1,4 @@
-package com.tikal.mscontrol.join;
+package com.kurento.commons.mscontrol.join;
 
 /**
  * A JoinableStream represents a media stream channel (or port), of a given

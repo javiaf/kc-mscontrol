@@ -1,7 +1,7 @@
-package com.tikal.mscontrol.resource;
+package com.kurento.commons.mscontrol.resource;
 
-import com.tikal.mscontrol.MediaObject;
-import com.tikal.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.MediaObject;
+import com.kurento.commons.mscontrol.MsControlException;
 
 /**
  * Gathers the set of methods to control a container of media Resources.

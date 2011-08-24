@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.tikal.mscontrol</groupId>
-	<artifactId>tk-mscontrol</artifactId>
+	<groupId>com.kurento.commons</groupId>
+	<artifactId>kc-mscontrol</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>MSControl API</name>
 	<description>Media Server Control API for the Java Platform based on jsr309</description>
-	<url>https://repository.kurento.com/site/tk-mscontrol</url>
+	<url>https://repository.kurento.com/site/kc-mscontrol</url>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -53,7 +53,7 @@
 	<distributionManagement>
 		<site>
 			<id>maven-site</id>
-			<url>scp://repository.kurento.com/var/www/kurento/site/tk-mscontrol/${project.version}</url>
+			<url>scp://repository.kurento.com/var/www/kurento/site/kc-mscontrol/${project.version}</url>
 		</site>
 		<repository>
 			<id>releases</id>
@@ -68,8 +68,8 @@
 	</distributionManagement>
 	
 	<scm>
-		<connection>scm:git:ssh://repository.kurento.com/git/tk-mscontrol</connection>
-		<developerConnection>scm:git:ssh://repository.kurento.com/git/tk-mscontrol</developerConnection>
-		<url>scm:git:ssh://repository.kurento.com/git/tk-mscontrol</url>
+		<connection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</connection>
+		<developerConnection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</developerConnection>
+		<url>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</url>
 	</scm>
 </project>

@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 /**
  * To receive events, an application must register a class extending this interface.

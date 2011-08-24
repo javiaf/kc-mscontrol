@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 import java.util.Collection;
 import java.util.Map;

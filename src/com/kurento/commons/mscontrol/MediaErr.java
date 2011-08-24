@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 /**
  * Definition of the most common errors, as MediaErr instances.

@@ -1,6 +1,6 @@
-package com.tikal.mscontrol.networkconnection;
+package com.kurento.commons.mscontrol.networkconnection;
 
-import com.tikal.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.MsControlException;
 
 /**
  * General purpose exception for the SdpPortManager.

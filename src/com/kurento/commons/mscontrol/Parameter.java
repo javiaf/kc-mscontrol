@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 /**
  * A Parameter designates a parameter for Resource operation.

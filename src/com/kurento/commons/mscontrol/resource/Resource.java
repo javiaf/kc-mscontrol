@@ -1,4 +1,4 @@
-package com.tikal.mscontrol.resource;
+package com.kurento.commons.mscontrol.resource;
 
 /**
  * Interface for things common to Resources. Every Resource interface (like

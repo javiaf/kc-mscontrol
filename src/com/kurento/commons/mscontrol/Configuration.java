@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 /**
  * A Configuration designates a particular instance of MediaObject.

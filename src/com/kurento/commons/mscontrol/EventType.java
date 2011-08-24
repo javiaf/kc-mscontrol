@@ -1,4 +1,4 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
 /**
  * An EventType indicates the type of event that a Resource sends. For example,

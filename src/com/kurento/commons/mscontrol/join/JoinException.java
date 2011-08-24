@@ -1,6 +1,6 @@
-package com.tikal.mscontrol.join;
+package com.kurento.commons.mscontrol.join;
 
-import com.tikal.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.MsControlException;
 
 public class JoinException extends MsControlException {
 

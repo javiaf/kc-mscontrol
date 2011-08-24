@@ -1,8 +1,8 @@
-package com.tikal.mscontrol.networkconnection;
+package com.kurento.commons.mscontrol.networkconnection;
 
-import com.tikal.mscontrol.EventType;
-import com.tikal.mscontrol.MediaErr;
-import com.tikal.mscontrol.MediaEvent;
+import com.kurento.commons.mscontrol.EventType;
+import com.kurento.commons.mscontrol.MediaErr;
+import com.kurento.commons.mscontrol.MediaEvent;
 
 /**
  * An event from a SdpPortManager.

@@ -1,7 +1,7 @@
-package com.tikal.mscontrol.networkconnection;
+package com.kurento.commons.mscontrol.networkconnection;
 
-import com.tikal.mscontrol.MediaEventNotifier;
-import com.tikal.mscontrol.resource.Resource;
+import com.kurento.commons.mscontrol.MediaEventNotifier;
+import com.kurento.commons.mscontrol.resource.Resource;
 
 /**
  * Handle a set of media ports, defined by a pair of Session Descriptions.

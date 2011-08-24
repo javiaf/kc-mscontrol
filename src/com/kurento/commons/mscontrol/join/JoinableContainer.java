@@ -1,7 +1,7 @@
-package com.tikal.mscontrol.join;
+package com.kurento.commons.mscontrol.join;
 
-import com.tikal.mscontrol.MsControlException;
-import com.tikal.mscontrol.join.JoinableStream.StreamType;
+import com.kurento.commons.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.join.JoinableStream.StreamType;
 
 /**
  * A Joinable object that contains multiple streams.<br>

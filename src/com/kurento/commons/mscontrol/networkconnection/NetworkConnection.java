@@ -1,8 +1,8 @@
-package com.tikal.mscontrol.networkconnection;
+package com.kurento.commons.mscontrol.networkconnection;
 
-import com.tikal.mscontrol.MsControlException;
-import com.tikal.mscontrol.join.JoinableContainer;
-import com.tikal.mscontrol.resource.ResourceContainer;
+import com.kurento.commons.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.join.JoinableContainer;
+import com.kurento.commons.mscontrol.resource.ResourceContainer;
 
 /**
  * A NetworkConnection is a JoinableContainer that drives network media ports.<br>

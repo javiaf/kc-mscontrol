@@ -1,8 +1,8 @@
-package com.tikal.mscontrol.mediacomponent;
+package com.kurento.commons.mscontrol.mediacomponent;
 
-import com.tikal.mscontrol.MsControlException;
-import com.tikal.mscontrol.join.JoinableContainer;
-import com.tikal.mscontrol.resource.ResourceContainer;
+import com.kurento.commons.mscontrol.MsControlException;
+import com.kurento.commons.mscontrol.join.JoinableContainer;
+import com.kurento.commons.mscontrol.resource.ResourceContainer;
 
 /**
  * <p>

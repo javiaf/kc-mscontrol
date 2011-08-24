@@ -1,4 +1,4 @@
-package com.tikal.mscontrol.join;
+package com.kurento.commons.mscontrol.join;
 
 public class TooManyJoineesException extends JoinException {
 

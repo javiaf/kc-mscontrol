@@ -1,7 +1,7 @@
-package com.tikal.mscontrol;
+package com.kurento.commons.mscontrol;
 
-import com.tikal.mscontrol.mediacomponent.MediaComponent;
-import com.tikal.mscontrol.networkconnection.NetworkConnection;
+import com.kurento.commons.mscontrol.mediacomponent.MediaComponent;
+import com.kurento.commons.mscontrol.networkconnection.NetworkConnection;
 
 /**
  * A MediaSession is a container and factory for media objects. It handles the
