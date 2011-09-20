@@ -1,0 +1,36 @@
+   ------
+   Kurento Commons MSControl
+   ------
+   ------
+   Date
+   ------
+
+Kurento Commons MSControl
+
+* Introduction
+
+	Kurento Commons MSControl is an API designed with the same philosophy as 
+    {{{http://www.jcp.org/en/jsr/detail?id=309}JSR309 Media Server Control API}}.
+	that defines multiple  components for media handling and provides a common
+	interface, called <Joinable>, that facilitates creation of arbitrarily complex networks
+	for media delivery. JSR309 is (as stated in the title) intended for Media Servers.
+	It defines the concept of MediaGroup as a point of media termination within the
+	reception device. This termination points can be either a PLAYER or a RECORER to
+	connect the relay elements with the storage devices. This approach does not suits
+	well when termination points like cameras or screens. For that reason Kurento Commons MSControl
+	defines a new API with the same philosophy, but more adapted to a mobile terminating point.
+	
+	Specifically, this API consist in simplify JSR309 Media Server Control API and add a new abstraction named MediaComponent.
+	This abstraction replaces MediaGroup and adapts better to independent media components that mobile devices have. A MediaComponent
+	has two basic features: start and stop. The specific functionality in each feature is dependent of each type of MediaComponent.
+
+
+* Class diagrams
+
+	The following simplified class diagrams are intended to help understand the object model.
+
+[./images/kc-mscontrol.png] Overview class diagram
+	
+	
+	
+	
