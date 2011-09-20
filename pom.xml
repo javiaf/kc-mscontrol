@@ -5,10 +5,20 @@
 	<artifactId>kc-mscontrol</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<name>MSControl API</name>
 	<description>Media Server Control API for the Java Platform based on jsr309</description>
 	<url>https://repository.kurento.com/site/kc-mscontrol</url>
+
+	<developers>
+		<developer>
+			<id>mparis</id>
+			<name>Miguel París Díaz</name>
+			<email>mparisdiaz@gmail.com</email>
+			<organization>Kurento</organization>
+		</developer>
+	</developers>
+
 
 	<build>
 		<plugins>
@@ -46,9 +56,24 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
 		</plugins>
 	</build>
-	
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<distributionManagement>
 		<site>
 			<id>maven-site</id>
@@ -65,7 +90,7 @@
 			<url>scp://repository.kurento.com/opt/tomcat/current/data/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
 	<scm>
 		<connection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</connection>
 		<developerConnection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</developerConnection>
