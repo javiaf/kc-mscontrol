@@ -16,7 +16,7 @@ import com.kurento.commons.mscontrol.resource.ResourceContainer;
  * 
  * </p>
  * 
- * @author Miguel París Díaz
+ * @author mparis
  * 
  */
 public interface MediaComponent extends JoinableContainer, ResourceContainer {

@@ -7,7 +7,7 @@ import com.kurento.commons.mscontrol.networkconnection.NetworkConnection;
  * A MediaSession is a container and factory for media objects. It handles the
  * cleanup on <code>release()</code>.
  * 
- * @author Miguel París Díaz
+ * @author mparis
  * 
  */
 public interface MediaSession extends MediaObject {
