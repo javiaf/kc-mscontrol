@@ -31,7 +31,7 @@ public interface MediaComponent extends JoinableContainer, ResourceContainer {
 
 	/**
 	 * <p>
-	 * Start treatment or getting of media.
+	 * Stop treatment or getting of media.
 	 */
 	public void stop();
 
