@@ -8,8 +8,8 @@
 	<packaging>jar</packaging>
 
 	<name>Kurento Commons MSControl</name>
-	<description>Media Server Control API for the Java Platform based on jsr309</description>
-	<url>https://repository.kurento.com/docs/kc-mscontrol</url>
+	<description>Simplified Media Control API for the Java Platform based on jsr309</description>
+	<url>http://www.kurento.com/docs/kc-mscontrol</url>
 
 	<organization>
 		<name>Kurento</name>
