@@ -1,23 +1,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>com.kurento.commons</groupId>
 	<artifactId>kc-mscontrol</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-RC-1</version>
 	<packaging>jar</packaging>
 
-	<name>MSControl API</name>
+	<name>Kurento Commons MSControl</name>
 	<description>Media Server Control API for the Java Platform based on jsr309</description>
-	<url>https://repository.kurento.com/site/kc-mscontrol</url>
+	<url>https://repository.kurento.com/docs/kc-mscontrol</url>
+
+	<organization>
+		<name>Kurento</name>
+		<url>http://www.kurento.com</url>
+	</organization>
 
 	<developers>
 		<developer>
 			<id>mparis</id>
 			<name>Miguel París Díaz</name>
-			<email>mparisdiaz@gmail.com</email>
-			<organization>Kurento</organization>
 		</developer>
 	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Javier López Fernández</name>
+		</contributor>
+	</contributors>
+
+	<mailingLists>
+		<mailingList>
+			<name>Kurento</name>
+			<subscribe>http://groups.google.com/group/kurento/subscribe</subscribe>
+			<post>http://groups.google.com/group/kurento/post</post>
+			<archive>http://groups.google.com/group/kurento/about</archive>
+		</mailingList>
+	</mailingLists>
 
 
 	<build>
@@ -77,7 +96,8 @@
 	<distributionManagement>
 		<site>
 			<id>maven-site</id>
-			<url>scp://repository.kurento.com/var/www/kurento/site/kc-mscontrol/${project.version}</url>
+			<url>scp://repository.kurento.com/var/www/kurento/site/kc-mscontrol/${project.version}
+			</url>
 		</site>
 		<repository>
 			<id>releases</id>
@@ -92,8 +112,8 @@
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</connection>
+		<connection>scm:http://kurento.googlecode.com</connection>
 		<developerConnection>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</developerConnection>
-		<url>scm:git:ssh://repository.kurento.com/git/kc-mscontrol</url>
+		<url>https://repository.kurento.com/git/kurento-android-sdk/?p=kc-mscontrol</url>
 	</scm>
 </project>
