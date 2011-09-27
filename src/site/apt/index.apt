@@ -11,19 +11,30 @@ Kurento Commons MSControl
 
 	Kurento Commons MSControl is an API designed with the same philosophy as 
     {{{http://www.jcp.org/en/jsr/detail?id=309}JSR309 Media Server Control API}}.
-	that defines multiple  components for media handling and provides a common
-	interface, called <Joinable>, that facilitates creation of arbitrarily complex networks
-	for media delivery. JSR309 is (as stated in the title) intended for Media Servers.
-	It defines the concept of MediaGroup as a point of media termination within the
-	reception device. This termination points can be either a PLAYER or a RECORER to
-	connect the relay elements with the storage devices. This approach does not suits
-	well when termination points like cameras or screens. For that reason Kurento Commons MSControl
-	defines a new API with the same philosophy, but more adapted to a mobile terminating point.
+	It defines multiple components for media handling and provides a common
+	interface, called <<<Joinable>>>, that facilitates creation of arbitrarily complex networks
+	for media delivery. JSR309 is (as stated in the title) intended for Media Servers and
+	does not suits well for client implementations. For that reason Kurento Commons MSControl
+	defines a new API with the same philosophy, but more adapted to a mobile terminating points
 	
-	Specifically, this API consist in simplify JSR309 Media Server Control API and add a new abstraction named MediaComponent.
-	This abstraction replaces MediaGroup and adapts better to independent media components that mobile devices have. A MediaComponent
-	has two basic features: start and stop. The specific functionality in each feature is dependent of each type of MediaComponent.
-
+	MSControl components manage sources and sinks of media: network connection, play/record from file,
+	camera, microphone, etc. All this components implement the <<<Joinable>>> interface,
+	that basically models a pipe connecting sink and sources to a internal common interface. When
+	to <<<Joinable>>> are connected, the media flows from sources to sinks on both sides, 
+	enabling services.
+		
+	There are several rules that defines connection between <<<Joinable>>> components
+	
+		* Connection can present three modes, that defines streams direction: DUPLEX,
+		for bidirectional media flow; SEND, when media flows from connecting to connected
+		component and RECV, when media is send by connected to connecting component.
+		
+		* <<<Joinable>>> can receive media from just a single source but can deliver media to
+		 many sinks.
+	
+		* If a <<<Joinable>>> component receives media from one source and it is connected to 
+		a second source, the first one is silently disconnected 
+		
 
 * Class diagrams
 
