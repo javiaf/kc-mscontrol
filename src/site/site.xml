@@ -2,14 +2,16 @@
 <project name="Kurento Commons MSControl">
 	<bannerLeft>
 		<name>Kurento Project</name>
-		<src>http://www.kurento.com/kurento/sites/all/themes/bartikplus/logo.png</src>
+		<src>http://www.kurento.com/kurento/sites/all/themes/bartikplus/logo.png
+		</src>
 		<href>http://www.kurento.com</href>
 	</bannerLeft>
+
 	<body>
 		<links>
 			<item name="Kurento" href="http://www.kurento.com/" />
 			<item name="JSR309" href="http://www.jcp.org/en/jsr/detail?id=309" />
 		</links>
-		<menu ref="reports"/>
+		<menu ref="reports" />
 	</body>
 </project>
