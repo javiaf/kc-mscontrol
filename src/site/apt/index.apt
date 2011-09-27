@@ -19,11 +19,11 @@ Kurento Commons MSControl
 	
 	MSControl components manage sources and sinks of media: network connection, play/record from file,
 	camera, microphone, etc. All this components implement the <<<Joinable>>> interface,
-	that basically models a pipe connecting sink and sources to a internal common interface. When
-	to <<<Joinable>>> are connected, the media flows from sources to sinks on both sides, 
+	that basically models a pipe, connecting sink and sources, to a internal common interface. When
+	two <<<Joinable>>> are connected, the media flows from sources to sinks on both sides, 
 	enabling services.
 		
-	There are several rules that defines connection between <<<Joinable>>> components
+	There are several rules that apply to connection between <<<Joinable>>> components
 	
 		* Connection can present three modes, that defines streams direction: DUPLEX,
 		for bidirectional media flow; SEND, when media flows from connecting to connected
