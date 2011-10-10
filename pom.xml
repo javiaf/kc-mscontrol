@@ -9,7 +9,7 @@
 
 	<name>Kurento Commons MSControl</name>
 	<description>Simplified Media Control API for the Java Platform based on jsr309</description>
-	<url>http://www.kurento.com/docs/kc-mscontrol</url>
+	<url>http://www.kurento.com/docs/kc-mscontrol/${project.version}</url>
 
 	<organization>
 		<name>Kurento</name>
