@@ -11,6 +11,11 @@
 	<description>Simplified Media Control API for the Java Platform based on jsr309</description>
 	<url>http://www.kurento.com/docs/kc-mscontrol/${project.version}</url>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8 </project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
 	<organization>
 		<name>Kurento</name>
 		<url>http://www.kurento.com</url>
