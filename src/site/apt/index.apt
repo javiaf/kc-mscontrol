@@ -33,7 +33,7 @@ Kurento Commons MSControl
 		 many sinks.
 	
 		* If a <<<Joinable>>> component receives media from one source and it is connected to 
-		a second source, the first one is silently disconnected 
+		a second source, the first one is silently disconnected. 
 		
 
 * Class diagrams
