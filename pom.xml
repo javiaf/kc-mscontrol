@@ -43,7 +43,6 @@
 		</mailingList>
 	</mailingLists>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -105,7 +104,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
@@ -113,7 +112,6 @@
 				<version>2.0</version>
 			</extension>
 		</extensions>
-		
 	</build>
 
 	<reporting>
