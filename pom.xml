@@ -43,7 +43,6 @@
 		</mailingList>
 	</mailingLists>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -92,8 +91,20 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.3.0-1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		
+
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
@@ -101,7 +112,6 @@
 				<version>2.0</version>
 			</extension>
 		</extensions>
-		
 	</build>
 
 	<reporting>
