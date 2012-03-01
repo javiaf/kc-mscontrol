@@ -18,6 +18,7 @@
 package com.kurento.commons.mscontrol;
 
 import com.kurento.commons.mscontrol.mediacomponent.MediaComponent;
+import com.kurento.commons.mscontrol.mediamixer.MediaMixer;
 import com.kurento.commons.mscontrol.networkconnection.NetworkConnection;
 
 /**
@@ -54,4 +55,26 @@ public interface MediaSession extends MediaObject {
 	public MediaComponent createMediaComponent(Configuration<MediaComponent> predefinedConfig,
 			Parameters params) throws MsControlException;
 
+	/**
+	 * Create a MediaMixer.
+	 * 
+	 * @param predefinedConfig
+	 *            Defines the set of resources in the MediaMixer, and their
+	 *            arrangement. See MediaMixer for the list of predefined
+	 *            Configurations.
+	 * @param params
+	 *            Customization parameters, like MediaObject.MEDIAOBJECT_ID, or
+	 *            MediaMixer.MAX_PORTS.
+	 * @return a MediaMixer Throws: MsControlException
+	 */
+	public MediaMixer createMediaMixer(Configuration<MediaMixer> predefinedConfig,
+			Parameters params)
+			throws MsControlException;
+
+	/**
+	 * Create a MediaMixer.
+	 * 
+	 * @return a MediaMixer Throws: MsControlException
+	 */
+	public MediaMixer createMediaMixer() throws MsControlException;
 }
