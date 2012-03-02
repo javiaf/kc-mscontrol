@@ -39,6 +39,18 @@ public interface MediaSession extends MediaObject {
 	public NetworkConnection createNetworkConnection() throws MsControlException;
 
 	/**
+	 * Create a NetworkConnection.
+	 * 
+	 * @param predefinedConfig
+	 *            Defines the configuration of the NetworkConnection.
+	 * @return a NetworkConnection
+	 * @throws MsControlException
+	 */
+	public NetworkConnection createNetworkConnection(
+			Configuration<NetworkConnection> predefinedConfig)
+			throws MsControlException;
+
+	/**
 	 * </p> Create a MediaComponent.
 	 * 
 	 * @param predefinedConfig
