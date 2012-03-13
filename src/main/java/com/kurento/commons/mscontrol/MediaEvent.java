@@ -29,8 +29,7 @@ public interface MediaEvent<S> {
 	/**
 	 * Error returned by getError() when there is no error.
 	 */
-	static final MediaErr NO_ERROR = new MediaErr() {
-	};
+	static final MediaErr NO_ERROR = MediaErr.NO_ERROR;
 
 	/**
 	 * Identify the reason or cause of an error or failure.
