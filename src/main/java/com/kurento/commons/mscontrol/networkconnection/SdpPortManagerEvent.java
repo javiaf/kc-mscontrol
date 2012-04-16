@@ -17,6 +17,7 @@
 
 package com.kurento.commons.mscontrol.networkconnection;
 
+import com.kurento.commons.media.format.SessionSpec;
 import com.kurento.commons.mscontrol.EventType;
 import com.kurento.commons.mscontrol.MediaErr;
 import com.kurento.commons.mscontrol.MediaEvent;
@@ -31,14 +32,14 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 
 	/**
 	 * EventType sent by a SdpPortManager when
-	 * SdpPortManager.processSdpOffer(byte[]) has completed.
+	 * SdpPortManager.processSdpOffer(SessionSpec) has completed.
 	 */
 	static final EventType ANSWER_GENERATED = new EventType() {
 	};
 
 	/**
 	 * EventType sent by a SdpPortManager when
-	 * SdpPortManager.processSdpAnswer(byte[]) has completed.
+	 * SdpPortManager.processSdpAnswer(SessionSpec) has completed.
 	 */
 	static final EventType ANSWER_PROCESSED = new EventType() {
 	};
@@ -87,6 +88,6 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	/**
 	 * Returns the most recent Media Server Session Description.
 	 */
-	byte[] getMediaServerSdp();
+	SessionSpec getMediaServerSdp();
 
 }

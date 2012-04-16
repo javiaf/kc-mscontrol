@@ -17,6 +17,7 @@
 
 package com.kurento.commons.mscontrol.networkconnection;
 
+import com.kurento.commons.media.format.SessionSpec;
 import com.kurento.commons.mscontrol.MediaEventNotifier;
 import com.kurento.commons.mscontrol.resource.Resource;
 
@@ -171,7 +172,7 @@ public interface SdpPortManager extends Resource<NetworkConnection>,
 	 * @return The last agreed Media Server session description
 	 * @throws SdpPortManagerException
 	 */
-	byte[] getMediaServerSessionDescription() throws SdpPortManagerException;
+	SessionSpec getMediaServerSessionDescription() throws SdpPortManagerException;
 
 	/**
 	 * This method gives access to the User Agent session description for media
@@ -188,7 +189,7 @@ public interface SdpPortManager extends Resource<NetworkConnection>,
 	 * @return The last agreed User Agent session description
 	 * @throws SdpPortManagerException
 	 */
-	byte[] getUserAgentSessionDescription() throws SdpPortManagerException;
+	SessionSpec getUserAgentSessionDescription() throws SdpPortManagerException;
 
 	/**
 	 * Request the Media Server to process the given SDP answer (from the remote
@@ -201,7 +202,7 @@ public interface SdpPortManager extends Resource<NetworkConnection>,
 	 *            SDP answer from the remote User Agent
 	 * @throws SdpPortManagerException
 	 */
-	void processSdpAnswer(byte[] answer) throws SdpPortManagerException;
+	void processSdpAnswer(SessionSpec answer) throws SdpPortManagerException;
 
 	/**
 	 * Request the MediaServer to process the given SDP offer (from the remote
@@ -216,7 +217,7 @@ public interface SdpPortManager extends Resource<NetworkConnection>,
 	 *            SDP offer from the remote User Agent
 	 * @throws SdpPortManagerException
 	 */
-	void processSdpOffer(byte[] offer) throws SdpPortManagerException;
+	void processSdpOffer(SessionSpec offer) throws SdpPortManagerException;
 
 	/**
 	 * Cancel the SDP offer that previously was requested with

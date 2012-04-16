@@ -13,6 +13,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8 </project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!--  dependencies versions -->
+		<kc-mediaspec.version>2.0.0-SNAPSHOT</kc-mediaspec.version>
 	</properties>
 
 	<organization>
@@ -24,6 +27,10 @@
 		<developer>
 			<id>mparis</id>
 			<name>Miguel París Díaz</name>
+		</developer>
+		<developer>
+			<id>jcaden</id>
+			<name>José Antonio Santos</name>
 		</developer>
 	</developers>
 
@@ -41,6 +48,14 @@
 			<archive>http://groups.google.com/group/kurento/about</archive>
 		</mailingList>
 	</mailingLists>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kurento.commons</groupId>
+			<artifactId>kc-mediaspec</artifactId>
+			<version>${kc-mediaspec.version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
