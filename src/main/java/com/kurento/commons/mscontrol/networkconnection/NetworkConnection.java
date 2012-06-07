@@ -19,6 +19,7 @@ package com.kurento.commons.mscontrol.networkconnection;
 
 import com.kurento.commons.mscontrol.MsControlException;
 import com.kurento.commons.mscontrol.join.JoinableContainer;
+import com.kurento.commons.mscontrol.join.JoinableStream.StreamType;
 import com.kurento.commons.mscontrol.resource.ResourceContainer;
 
 /**
@@ -36,4 +37,7 @@ import com.kurento.commons.mscontrol.resource.ResourceContainer;
 public interface NetworkConnection extends JoinableContainer, ResourceContainer {
 
 	public SdpPortManager getSdpPortManager() throws MsControlException;
+
+	public long getBitrate(StreamType streamType, Direction direction);
+
 }
