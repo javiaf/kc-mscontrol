@@ -197,7 +197,7 @@
 	<scm>
 		<connection>scm:http://kurento.googlecode.com</connection>
 		<developerConnection>scm:git:ssh://git@repository.kurento.com/kc/kc-mscontrol.git</developerConnection>
-		<url>https://repository.kurento.com/git/kurento-commons/?p=kc-mscontrol.git</url>
+		<url>https://repository.kurento.com/git/?p=kc/kc-mscontrol.git</url>
 	</scm>
 
 	<licenses>
