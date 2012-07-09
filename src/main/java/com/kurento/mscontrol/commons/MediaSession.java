@@ -17,6 +17,7 @@
 
 package com.kurento.mscontrol.commons;
 
+import com.kurento.commons.config.Parameters;
 import com.kurento.mscontrol.commons.mediacomponent.MediaComponent;
 import com.kurento.mscontrol.commons.mediamixer.MediaMixer;
 import com.kurento.mscontrol.commons.networkconnection.NetworkConnection;
