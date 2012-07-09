@@ -17,10 +17,10 @@
 
 package com.kurento.commons.mscontrol.networkconnection;
 
-import com.kurento.commons.media.format.SessionSpec;
 import com.kurento.commons.mscontrol.EventType;
 import com.kurento.commons.mscontrol.MediaErr;
 import com.kurento.commons.mscontrol.MediaEvent;
+import com.kurento.mediaspec.SessionSpec;
 
 /**
  * An event from a SdpPortManager.

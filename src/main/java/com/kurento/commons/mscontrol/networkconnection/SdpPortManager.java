@@ -17,9 +17,9 @@
 
 package com.kurento.commons.mscontrol.networkconnection;
 
-import com.kurento.commons.media.format.SessionSpec;
 import com.kurento.commons.mscontrol.MediaEventNotifier;
 import com.kurento.commons.mscontrol.resource.Resource;
+import com.kurento.mediaspec.SessionSpec;
 
 /**
  * Handle a set of media ports, defined by a pair of Session Descriptions.
