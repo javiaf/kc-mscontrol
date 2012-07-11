@@ -12,6 +12,12 @@
 			<item name="Kurento" href="http://www.kurento.com/" />
 			<item name="JSR309" href="http://www.jcp.org/en/jsr/detail?id=309" />
 		</links>
+		<menu name="Kurento MsControl">
+			<item name="Test plan" href="">
+				<item name="SdpPortManager test plan" href="./SdpPortManager-test-plan.html" />
+			</item>
+		</menu>
+		<menu ref="reports" />
 		<menu ref="reports" />
 	</body>
 </project>

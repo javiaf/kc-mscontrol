@@ -1,0 +1,44 @@
+   ------
+   Kurento Android MsControl test plan
+   ------
+   ------
+   Date
+   ------
+   
+SdpPortManager Test Plan
+
+	SdpPortManager must respond as is described in the documentation. To check that the behaviour is correct
+	there are the next tests.
+
+* Offer Generated Test
+	
+	[<<Test Procedure>>]
+	
+		A SdpPortManager object is obtained from a NetworkConnection object created
+		from a MediaSession object provided by the implementation tests.
+		
+		This MediaSession object must be properly configured to <<<generateSdpOffer()>>> method
+		create a correct SessionSpec and generate a <<OFFER_GENERATED>> event.
+		
++----
+
+------------------->generateSDPOffer()
+                                       ...................>
+                                                           (media resources)
+                                       <...................
+ <-------- OFFER_GENERATED ----------
+
++----
+	
+	[<<Pass Criteria>>]
+ 	
+		* Event generated:
+		
+			* EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+			
+			* Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			* SessionSpec generated must have at least one MediaSpec.
+			
+			* Each MediaSpec must have at least one Payload.
+
