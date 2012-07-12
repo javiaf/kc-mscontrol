@@ -81,8 +81,6 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 
 		assertNull(event.getMediaServerSdp());
 		// ///////////////////////////
-
-		nc.release();
 	}
 
 	/**
@@ -151,8 +149,6 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 
 		assertNull(event.getMediaServerSdp());
 		// ///////////////////////////
-
-		nc.release();
 	}
 
 }

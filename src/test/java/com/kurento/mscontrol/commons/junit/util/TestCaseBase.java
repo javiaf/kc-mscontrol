@@ -30,6 +30,7 @@ public abstract class TestCaseBase extends TestCase {
 		MediaSession mediaSession = getMediaSession();
 		checkMediaSessionIsNotNull(mediaSession);
 		nc = mediaSession.createNetworkConnection();
+		assertNotNull(nc);
 		super.setUp();
 	}
 
