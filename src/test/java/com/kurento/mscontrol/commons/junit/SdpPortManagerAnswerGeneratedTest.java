@@ -11,13 +11,13 @@ import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
 import com.kurento.mscontrol.commons.networkconnection.SdpPortManager;
 import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
 
-public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
+public class SdpPortManagerAnswerGeneratedTest extends TestCaseBase {
 
-	private static final int WAIT_TIME = 5;
+	private final static int WAIT_TIME = 5;
 
 	/**
-	 * Test to check that {@link SdpPortManager#generateSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#OFFER_GENERATED} when it generates a correct
+	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
+	 * {@link SdpPortManagerEvent#ANSWER_GENERATED} when it process a correct
 	 * SessionSpec.
 	 * <p>
 	 * 
@@ -25,31 +25,33 @@ public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
 	 * using {@link #setMediaSession(MediaSession)} method.
 	 * 
 	 * <pre>
-	 * ------------------->generateSDPOffer()
+	 * ------------------->processSdpOffer(userAgentSDP)
 	 *                                       ...................>
 	 *                                                           (media resources)
 	 *                                       <...................
-	 * <-------- OFFER_GENERATED ----------
+	 * <-------- ANSWER_GENERATED ----------
 	 * </pre>
 	 * 
 	 * @throws Exception
 	 */
-	public void testOfferGenerated() throws Exception {
+	public void testAnswerGenerated() throws Exception {
 		SdpPortManager sdpManager = nc.getSdpPortManager();
 		SdpPortManagerListener listener = new SdpPortManagerListener();
 		sdpManager.addListener(listener);
+
+		// ///////////////////////////
+		// Generate a SessionSpec as offer.
 
 		sdpManager.generateSdpOffer();
 		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
 		assertNotNull(event);
 		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED,
-				event.getEventType());
+		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
 
-		SessionSpec ss = event.getMediaServerSdp();
-		assertNotNull(ss);
+		SessionSpec sessionSpecOfferToProcess = event.getMediaServerSdp();
+		assertNotNull(sessionSpecOfferToProcess);
 
-		List<MediaSpec> mediaList = ss.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMediaSpecs();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -62,6 +64,30 @@ public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
 		}
 
 		nc.release();
+		// ///////////////////////////
+
+		sdpManager.processSdpOffer(sessionSpecOfferToProcess);
+		event = listener.poll(WAIT_TIME);
+		assertNotNull(event);
+		log.debug("error: " + event.getError());
+		log.debug("Session spec: " + event.getMediaServerSdp());
+		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
+		assertEquals(SdpPortManagerEvent.ANSWER_GENERATED, event.getEventType());
+
+		SessionSpec ss = event.getMediaServerSdp();
+		assertNotNull(ss);
+
+		mediaList = ss.getMediaSpecs();
+		assertNotNull(mediaList);
+		assertTrue("Answered SessionSpec must have at least one MediaSpec.",
+				mediaList.size() > 0);
+
+		for (MediaSpec ms : mediaList) {
+			List<Payload> payloadList = ms.getPayloads();
+			assertNotNull(mediaList);
+			assertTrue("Each MediaSpec must have at least one PayloadSpec.",
+					payloadList.size() > 0);
+		}
 	}
 
 }
