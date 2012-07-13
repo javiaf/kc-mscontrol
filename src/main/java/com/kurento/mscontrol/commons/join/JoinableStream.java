@@ -18,9 +18,9 @@
 package com.kurento.mscontrol.commons.join;
 
 /**
- * A JoinableStream represents a media stream channel (or port), of a given
- * type: audio, video, etc. It is a Joinable and as such, can be used as an
- * argument to join.<br>
+ * A <code>JoinableStream</code> represents a media stream channel (or port), of
+ * a given type: audio, video, etc. It is a <code>Joinable</code> and as such,
+ * can be used as an argument to <code>join</code>.<br>
  * A JoinableStream has always one parent JoinableContainer, and that parent
  * cannot change.<br>
  * Operating on JoinableStreams instead of their JoinableContainer, enables
@@ -30,7 +30,7 @@ package com.kurento.mscontrol.commons.join;
 public interface JoinableStream extends Joinable {
 
 	/**
-	 *  Can be audio or video
+	 * Can be audio or video
 	 */
 	static enum StreamType {
 		audio, video;

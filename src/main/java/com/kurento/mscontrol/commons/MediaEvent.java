@@ -17,12 +17,14 @@
 
 package com.kurento.mscontrol.commons;
 
+import com.kurento.mscontrol.commons.mediamixer.MediaMixer;
+import com.kurento.mscontrol.commons.networkconnection.SdpPortManager;
+
 /**
  * 
  * An event from a MediaEventNotifier. Characterized by the source of the event,
  * and an EventType indicating its nature.
  * 
- * @param <S>
  */
 public interface MediaEvent<S> {
 
@@ -34,10 +36,10 @@ public interface MediaEvent<S> {
 	/**
 	 * Identify the reason or cause of an error or failure.
 	 * <p>
-	 * If this Event is associated with an error, then getError() returns a
-	 * MediaErr that identifies the problem.<br>
-	 * If this Event is not associated with an error, then getError() returns
-	 * MediaErr.NO_ERROR.
+	 * If this Event is associated with an error, then <code>getError()</code>
+	 * returns a MediaErr that identifies the problem.<br>
+	 * If this Event is not associated with an error, then
+	 * <code>getError()</code> returns {@link MediaErr#NO_ERROR}.
 	 * <p>
 	 * The list of generic error is defined in class MediaErr. Resources can
 	 * define more specific errors.
@@ -57,17 +59,15 @@ public interface MediaEvent<S> {
 	 * Get the EventType that identifies the event nature.
 	 * <p>
 	 * For completion events, this identifies the operation that has completed.
-	 * It should never return null, even in the case of an error event.<br>
-	 * Further detail about the reason for this event is available using
-	 * ResourceEvent.getQualifier().
+	 * It should never return null, even in the case of an error event.
 	 * 
 	 * @return the EventType identifying the event nature
 	 */
 	public EventType getEventType();
 
 	/**
-	 * Gives access to the source of the Media Event. Can be for example: Player
-	 * , SdpPortManager, MediaMixer or VxmlDialog
+	 * Gives access to the source of the Media Event. Can be for example:
+	 * {@link SdpPortManager} or {@link MediaMixer}.
 	 */
 	public S getSource();
 

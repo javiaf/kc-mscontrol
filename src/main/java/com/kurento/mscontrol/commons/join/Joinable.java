@@ -25,10 +25,10 @@ import com.kurento.mscontrol.commons.MsControlException;
  * It can also be a Stream (audio, video, ...) of any of those objects.<br>
  * Joinables can be joined/unjoined, to make the media stream flow between them.
  * Join operations can be limited both to a stream (i.e audio,video, see
- * {@link JoinableStream.StreamType}) and direction (i.e. SEND, RECV, DUPLEX, see
- * {@link Joinable.Direction}).<br>
+ * {@link JoinableStream.StreamType}) and direction (i.e. SEND, RECV, DUPLEX,
+ * see {@link Joinable.Direction}).<br>
  * The join direction can be changed by calling join again, with a different
- * Direction.
+ * <code>Direction</code>.
  */
 public interface Joinable {
 
@@ -36,7 +36,22 @@ public interface Joinable {
 	 * Indicates a direction for the media flow.
 	 */
 	static enum Direction {
-		DUPLEX, RECV, SEND;
+		/**
+		 * The media flows in both directions between the objects
+		 */
+		DUPLEX,
+
+		/**
+		 * The media flows into the object, see
+		 * {@link Joinable#join(Direction, Joinable)}.
+		 */
+		RECV,
+
+		/**
+		 * The media flows out of the object, see
+		 * {@link Joinable#join(Direction, Joinable)}.
+		 */
+		SEND;
 	}
 
 	/**
@@ -69,7 +84,8 @@ public interface Joinable {
 	public Joinable[] getJoinees(Direction direction) throws MsControlException;
 
 	/**
-	 * Establish a media stream between this object and other.<p>
+	 * Establish a media stream between this object and <code>other</code>.
+	 * <p>
 	 * The Direction argument indicates a direction; The order of the arguments
 	 * helps to remember which is the origin and which is the destination. For
 	 * example:<br>
@@ -88,8 +104,8 @@ public interface Joinable {
 	 * <code>ObjectA.join(REVC, ObjectB)</code><br>
 	 * followed by<br>
 	 * <code>ObjectA.join(SEND, ObjectB)</code><br>
-	 * results in ObjectA sending to ObjectB (not duplex, the SEND direction is
-	 * <b>not</b> "added" to the RECV direction).
+	 * results in ObjectA sending to ObjectB (not duplex, the <code>SEND</code>
+	 * direction is <b>not</b> "added" to the <code>RECV</code> direction).
 	 * <p>
 	 * 
 	 * <h3><b>Joining an object to multiple other objects</b></h3>
@@ -121,10 +137,12 @@ public interface Joinable {
 	 *             if the number of joined objects is too high (value is
 	 *             implementation dependent)
 	 */
-	public void join(Direction direction, Joinable other) throws MsControlException;
+	public void join(Direction direction, Joinable other)
+			throws MsControlException;
 
 	/**
-	 * Disconnect any media streams flowing between this object and other's.<p>
+	 * Disconnect any media streams flowing between this object and other's.
+	 * <p>
 	 * 
 	 * <b>Note:</b> Changing the direction (e.g. changing from DUPLEX to RECV),
 	 * is obtained by calling join again, with the desired direction.

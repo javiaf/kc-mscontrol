@@ -32,14 +32,14 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 
 	/**
 	 * EventType sent by a SdpPortManager when
-	 * SdpPortManager.processSdpOffer(SessionSpec) has completed.
+	 * {@link SdpPortManager#processSdpOffer(SessionSpec)} has completed.
 	 */
 	static final EventType ANSWER_GENERATED = new EventType() {
 	};
 
 	/**
 	 * EventType sent by a SdpPortManager when
-	 * SdpPortManager.processSdpAnswer(SessionSpec) has completed.
+	 * {@link SdpPortManager#processSdpAnswer(SessionSpec)} has completed.
 	 */
 	static final EventType ANSWER_PROCESSED = new EventType() {
 	};
@@ -52,14 +52,16 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	};
 
 	/**
-	 * EventType sent by a SdpPortManager when SdpPortManager.generateSdpOffer()
-	 * has completed.
+	 * EventType sent by a SdpPortManager when
+	 * {@link SdpPortManager#generateSdpOffer()} has completed.
 	 */
 	static final EventType OFFER_GENERATED = new EventType() {
 	};
 
 	/**
 	 * Error sent by media server in case of resource shortage.
+	 * <p>
+	 * {@link SdpPortManager#getMediaServerSessionDescription()} returns null.
 	 */
 	static final MediaErr RESOURCE_UNAVAILABLE = new MediaErr() {
 	};
@@ -86,7 +88,11 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	};
 
 	/**
-	 * Returns the most recent Media Server Session Description.
+	 * Note that this Session Description may be not applied yet, if the
+	 * negotiation is not completed, for example after a call to
+	 * {@link SdpPortManager#generateSdpOffer()}.
+	 * 
+	 * @return the most recent Media Server Session Description.
 	 */
 	SessionSpec getMediaServerSdp();
 

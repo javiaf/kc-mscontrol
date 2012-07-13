@@ -17,10 +17,14 @@
 
 package com.kurento.mscontrol.commons;
 
+import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
+
 /**
- * An EventType indicates the type of event that a Resource sends. For example,
- * a SDP port manager may signal that OFFER_GENERATED, or ANSWER_PROCESSED.
+ * An EventType indicates the type of event that a Resource sends.<br>
+ * For example, a SDP port manager may signal that
+ * {@link SdpPortManagerEvent#OFFER_GENERATED OFFER_GENERATED} , or
+ * {@link SdpPortManagerEvent#ANSWER_PROCESSED ANSWER_PROCESSED}.
  */
-public class EventType {
+public interface EventType {
 
 }

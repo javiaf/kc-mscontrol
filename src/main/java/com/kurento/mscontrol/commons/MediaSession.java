@@ -25,22 +25,20 @@ import com.kurento.mscontrol.commons.networkconnection.NetworkConnection;
 /**
  * A MediaSession is a container and factory for media objects. It handles the
  * cleanup on <code>release()</code>.
- * 
- * @author mparis
- * 
  */
 public interface MediaSession extends MediaObject {
 
 	/**
-	 * Create a NetworkConnection.
+	 * Create a <code>NetworkConnection</code>.
 	 * 
 	 * @return a NetworkConnection
 	 * @throws MsControlException
 	 */
-	public NetworkConnection createNetworkConnection() throws MsControlException;
+	public NetworkConnection createNetworkConnection()
+			throws MsControlException;
 
 	/**
-	 * Create a NetworkConnection.
+	 * Create a <code>NetworkConnection</code>.
 	 * 
 	 * @param predefinedConfig
 	 *            Defines the configuration of the NetworkConnection.
@@ -52,7 +50,7 @@ public interface MediaSession extends MediaObject {
 			throws MsControlException;
 
 	/**
-	 * </p> Create a MediaComponent.
+	 * </p> Create a <code>MediaComponent</code>.
 	 * 
 	 * @param predefinedConfig
 	 *            Defines the concrete MediaComponent to create. <br>
@@ -60,34 +58,38 @@ public interface MediaSession extends MediaObject {
 	 *            implementation.
 	 * @param params
 	 *            Parameters to create a MediaComponent. The possible parameters
-	 *            for each concrete component must be defined on the
+	 *            for each specific MediaComponent must be defined on the
 	 *            implementation.
 	 * @return a MediaComponent
 	 * @throws MsControlException
 	 */
-	public MediaComponent createMediaComponent(Configuration<MediaComponent> predefinedConfig,
-			Parameters params) throws MsControlException;
+	public MediaComponent createMediaComponent(
+			Configuration<MediaComponent> predefinedConfig, Parameters params)
+			throws MsControlException;
 
 	/**
-	 * Create a MediaMixer.
+	 * Create a <code>MediaMixer</code>.
 	 * 
 	 * @param predefinedConfig
 	 *            Defines the set of resources in the MediaMixer, and their
 	 *            arrangement. See MediaMixer for the list of predefined
 	 *            Configurations.
 	 * @param params
-	 *            Customization parameters, like MediaObject.MEDIAOBJECT_ID, or
-	 *            MediaMixer.MAX_PORTS.
-	 * @return a MediaMixer Throws: MsControlException
+	 *            Customization parameters to create a MediaMixer. The possible
+	 *            parameters for each specific MediaMixer must be defined on the
+	 *            implementation.
+	 * @return a MediaMixer
+	 * @throws MsControlException
 	 */
-	public MediaMixer createMediaMixer(Configuration<MediaMixer> predefinedConfig,
-			Parameters params)
+	public MediaMixer createMediaMixer(
+			Configuration<MediaMixer> predefinedConfig, Parameters params)
 			throws MsControlException;
 
 	/**
-	 * Create a MediaMixer.
+	 * Create a <code>MediaMixer</code>.
 	 * 
-	 * @return a MediaMixer Throws: MsControlException
+	 * @return a MediaMixer
+	 * @throws MsControlException
 	 */
 	public MediaMixer createMediaMixer() throws MsControlException;
 }

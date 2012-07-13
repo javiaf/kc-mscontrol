@@ -17,8 +17,19 @@
 
 package com.kurento.mscontrol.commons;
 
+/**
+ * 
+ * A base class for objects that are created by a Factory, can be released.
+ * 
+ */
 public interface MediaObject {
 
+	/**
+	 * Release the resources associated to this media object.
+	 * <p>
+	 * The call is cascaded to the children of this object (the objects created
+	 * by it).
+	 */
 	public void release();
 
 }

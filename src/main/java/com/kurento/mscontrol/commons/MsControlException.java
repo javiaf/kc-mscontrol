@@ -18,7 +18,7 @@
 package com.kurento.mscontrol.commons;
 
 /**
- * General purpose exception
+ * General purpose exception.
  */
 public class MsControlException extends Exception {
 

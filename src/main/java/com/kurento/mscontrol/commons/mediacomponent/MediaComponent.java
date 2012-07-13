@@ -19,21 +19,21 @@ package com.kurento.mscontrol.commons.mediacomponent;
 
 import com.kurento.mscontrol.commons.MsControlException;
 import com.kurento.mscontrol.commons.join.JoinableContainer;
+import com.kurento.mscontrol.commons.networkconnection.NetworkConnection;
 import com.kurento.mscontrol.commons.resource.ResourceContainer;
 
 /**
  * <p>
- * A MediaComponent receive and/or send media streams from/to another Joinable
- * object.<br>
+ * A <code>MediaComponent</code> receive and/or send media streams from/to
+ * another <code>Joinable</code> object.<br>
  * Treatment of media, in case of receive media, and getting of media, in case
  * of send media, is dependent of implementation.
  * </p>
- * A MediaComponent is initially unrelated to any call. Then, a MediaComponent
- * can be joined/unjoined to another Joinable, normaly to a NetworkConnection.
+ * A <code>MediaComponent</code> is initially unrelated to any call. Then, a
+ * MediaComponent can be joined/unjoined to another Joinable, normaly to a
+ * {@link NetworkConnection}.
  * 
  * </p>
- * 
- * @author mparis
  * 
  */
 public interface MediaComponent extends JoinableContainer, ResourceContainer {

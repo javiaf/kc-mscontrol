@@ -18,7 +18,7 @@
 package com.kurento.mscontrol.commons;
 
 /**
- * A Configuration designates a particular instance of MediaObject.
+ * A Configuration designates a particular instance of {@link MediaObject}.
  */
 public interface Configuration<R extends MediaObject> {
 
