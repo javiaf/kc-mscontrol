@@ -15,7 +15,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- dependencies versions -->
-		<kc-mediaspec.version>2.0.1</kc-mediaspec.version>
+		<kc-mediaspec.version>2.0.2-SNAPSHOT</kc-mediaspec.version>
+		<kc-config.version>1.0.1-SNAPSHOT</kc-config.version>
 	</properties>
 
 	<organization>
@@ -55,6 +56,18 @@
 			<artifactId>kc-mediaspec</artifactId>
 			<version>${kc-mediaspec.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.kurento.commons</groupId>
+			<artifactId>kc-config</artifactId>
+			<version>${kc-config.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+<!-- 			<version>3.8.2</version> -->
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -85,6 +98,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
 					<archive>
 						<manifestEntries>
@@ -92,6 +106,13 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -121,11 +142,19 @@
 						<goals>
 							<!-- produce source artifact for main project sources -->
 							<goal>jar-no-fork</goal>
-
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.12</version>
+		        <configuration>
+		          <skipTests>true</skipTests>
+		        </configuration>
+		      </plugin>
 		</plugins>
 
 		<extensions>

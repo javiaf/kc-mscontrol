@@ -1,0 +1,434 @@
+   ------
+   Kurento Android MsControl test plan
+   ------
+   ------
+   Date
+   ------
+   
+SdpPortManager Test Plan
+
+	SdpPortManager must respond as is described in the documentation. To check that the behaviour is correct
+	there are the next tests.
+
+* Offer Generated Test
+
+	<<<generateSdpOffer()>>> method must create a correct SessionSpec and generate a <<OFFER_GENERATED>> event
+	if there are no problems.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent.
+
+	<<Automated by>> <<<com.kurento.mscontrol.commons.junit.SdpPortManagerOfferGeneratedTest#testOfferGenerated>>>
+
++----
+------------------->generateSDPOffer()
+                                       ...................>
+                                                           (media resources)
+                                       <...................
+ <-------- OFFER_GENERATED ----------
++----
+
+	[<<Pass Criteria>>]
+	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+
+
+
+* Answer Generated Test
+
+	<<<processSdpOffer(userAgentSDP)>>> method must create a correct SessionSpec and generate a <<ANSWER_GENERATED>> event
+	if there are no problems.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Generate a valid SessionSpec (userAgentSDP) using <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Call <<<processSdpOffer(userAgentSDP)>>> method.
+		
+		[<Step 4>] Expect the generated SdpPortManagerEvent by <<<processSdpOffer(userAgentSDP)>>>.
+
+	<<Automated by>> <<<com.kurento.mscontrol.commons.junit.SdpPortManagerAnswerGenerated#testAnswerGenerated>>>
+		
+	[]
+
++----
+------------------->processSdpOffer(userAgentSDP)
+                                                 ...................>
+                                                                     (media resources)
+                                                 <...................
+<-------- ANSWER_GENERATED ----------
++----
+	
+	[<<Pass Criteria>>]
+ 	
+ 		[[1]] Verify in <Step 1> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.ANSWER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+
+
+
+* Answer Processed Test
+	
+	<<<processSdpAnswer(userAgentSDP)>>> method generate a <<ANSWER_PROCESSED>> event
+	if there are no problems.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Call <<<processSdpAnswer(userAgentSDP)>>> method.
+		
+		[<Step 4>] Expect the generated SdpPortManagerEvent by <<<processSdpAnswer(userAgentSDP)>>>.
+
+	<<Automated by>> <<<com.kurento.mscontrol.commons.junit.SdpPortManagerAnswerProcessed#testAnswerProcessed>>>
+		
+	[]
+
++----
+------------------->generateSdpOffer()
+                                      ...................>
+                                                                     (media resources)
+                                      <...................
+<-------- ANSWER_GENERATED ----------
+
+------------------->processSdpAnswer(userAgentSDP)
+
+<-------- OFFER_GENERATED ----------
++----
+	
+	[<<Pass Criteria>>]
+ 	
+ 		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 4> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.ANSWER_PROCESSED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated is null.
+
+
+
+* Resource Unavailable Test (generateSdpOffer())
+	
+	<<RESOURCE_UNAVAILABLE>> event must be generated when the local SessionSpec can not be created
+	because there are no available media resources.
+	
+	
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Call <<<generateSdpOffer()>>> method without release NetworkConnection instance.
+		
+		[<Step 4>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+
+	[]
+
++----
+------------------->generateSDPOffer()
+                                       ...................>
+                                                           (media resources)
+                                       <...................
+ <-------- OFFER_GENERATED ----------
+
+NO RELEASE NetworkConnection
+
+------------------->generateSDPOffer()
+                                      ...................>
+                                                          (media resources)
+                                      <...................
+<-------- RESOURCE_UNAVAILABLE ----------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 4> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.RESOURCE_UNAVAILABLE.
+
+
+
+* Resource Unavailable Test (processSdpOffer(userAgentSDP)
+	
+	<<RESOURCE_UNAVAILABLE>> event must be generated when the local SessionSpec can not be created
+	because there are no available media resources.
+	
+	
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Call <<<processSdpOffer(userAgentSDP>>> method without release NetworkConnection instance.
+		
+		[<Step 4>] Expect the generated SdpPortManagerEvent by <<<processSdpOffer(userAgentSDP>>>.
+
+	[]
+
++----
+------------------->generateSDPOffer()
+                                       ...................>
+                                                           (media resources)
+                                       <...................
+ <-------- OFFER_GENERATED ----------
+
+NO RELEASE NetworkConnection
+
+------------------->processSdpOffer(userAgentSDP)
+                                      ...................>
+                                                          (media resources)
+                                      <...................
+<-------- RESOURCE_UNAVAILABLE ----------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 4> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.RESOURCE_UNAVAILABLE.
+
+
+
+* SDP Not Acceptable Test (processSdpOffer(userAgentSDP without payloads))
+	
+	<<SDP_NOT_ACCEPTABLE>> event must be generated when any matching codec is found
+	for any stream in <<<processSdpOffer(userAgentSDP)>>> method call.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Generate a valid SessionSpec (userAgentSDP) using <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Delete all payloads contained in userAgentSDP.
+		
+		[<Step 4>] Call <<<processSdpOffer(userAgentSDP)>>> method.
+		
+		[<Step 5>] Expect the generated SdpPortManagerEvent by <<<processSdpOffer(userAgentSDP)>>>.
+
+	[]
+
++----
+--------->processSdpOffer(userAgentSDP without payloads)
+                                                        ...................>
+                                                                            (media resources)
+                                                        <...................
+<----------------- SDP_NOT_ACCEPTABLE ------------------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 5> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.SDP_NOT_ACCEPTABLE.
+
+
+
+* SDP Not Acceptable Test (processSdpOffer(null))
+	
+	<<SDP_NOT_ACCEPTABLE>> event must be generated whe <<<processSdpOffer(userAgentSDP)>>> method call
+	does not receive any SessionSpec.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<processSdpOffer(null)>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<processSdpOffer(userAgentSDP)>>>.
+
+	[]
+
++----
+------------------->processSdpOffer(null)
+                                         ...................>
+                                                             (media resources)
+                                         <...................
+<--------- SDP_NOT_ACCEPTABLE -----------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[2]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.SDP_NOT_ACCEPTABLE.
+
+
+
+* SDP Not Acceptable Test (processSdpAnswer(userAgentSDP without payloads))
+	
+	<<SDP_NOT_ACCEPTABLE>> event must be generated when any matching codec is found
+	for any stream in <<<processSdpAnswer(userAgentSDP)>>> method call.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Delete all payloads contained in userAgentSDP.
+		
+		[<Step 4>] Call <<<processSdpAnswer(userAgentSDP)>>> method.
+		
+		[<Step 5>] Expect the generated SdpPortManagerEvent by <<<processSdpAnswer(userAgentSDP)>>>.
+
+	[]
+
++----
+------------------->generateSDPOffer()
+                                      ...................>
+                                                          (media resources)
+                                      <...................
+<-------- OFFER_GENERATED ----------
+
+------------------->processSdpAnswer(userAgentSDP without payloads)
+
+<-------- SDP_NOT_ACCEPTABLE ----------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 5> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.SDP_NOT_ACCEPTABLE.
+
+
+
+* SDP Not Acceptable Test (processSdpAnswer(null))
+	
+	<<SDP_NOT_ACCEPTABLE>> event must be generated when any matching codec is found
+	for any stream in <<<processSdpAnswer(userAgentSDP)>>> method call.
+
+	[<<Test Procedure>>]
+		
+		[<Step 1>] Call <<<generateSdpOffer()>>> method.
+		
+		[<Step 2>] Expect the generated SdpPortManagerEvent by <<<generateSdpOffer()>>>.
+		
+		[<Step 3>] Call <<<processSdpAnswer(null)>>> method.
+		
+		[<Step 4>] Expect the generated SdpPortManagerEvent by <<<processSdpAnswer(userAgentSDP)>>>.
+
+	[]
+
++----
+------------------->generateSDPOffer()
+                                      ...................>
+                                                          (media resources)
+                                      <...................
+<-------- OFFER_GENERATED ----------
+
+------------------->processSdpAnswer(null)
+
+<-------- SDP_NOT_ACCEPTABLE ----------
++----
+
+		[<<Pass Criteria>>]
+	 	
+		[[1]] Verify in <Step 2> the event received satisfies the next properties:
+
+			[[a]] EventType must be SdpPortManagerEvent.OFFER_GENERATED.
+	
+			[[b]] Error must be SdpPortManagerEvent.NO_ERROR.
+			
+			[[c]] SessionSpec generated must have at least one MediaSpec.
+			
+			[[d]] Each MediaSpec must have at least one Payload.
+		
+		[[2]] Verify in <Step 4> the event received satisfies the next properties:
+
+			[[a]] EventType must be null;
+	
+			[[b]] Error must be SdpPortManagerEvent.SDP_NOT_ACCEPTABLE.
