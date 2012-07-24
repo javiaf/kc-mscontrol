@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='hcpmscontrol'>
+  <inherits name='com.kurento.kc-mediaspec'/>
+  <inherits name='com.kurento.commons.kc-config'/>
+  <source path='commons'/>
+</module>
