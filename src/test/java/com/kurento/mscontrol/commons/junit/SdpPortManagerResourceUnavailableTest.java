@@ -58,7 +58,7 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 		SessionSpec ss = event.getMediaServerSdp();
 		assertNotNull(ss);
 
-		List<MediaSpec> mediaList = ss.getMediaSpecs();
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -126,7 +126,7 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 		SessionSpec sessionSpecOfferToProcess = event.getMediaServerSdp();
 		assertNotNull(sessionSpecOfferToProcess);
 
-		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);

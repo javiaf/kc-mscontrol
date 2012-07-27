@@ -55,7 +55,7 @@ public class SdpPortManagerAnswerProcessedTest extends TestCaseBase {
 		SessionSpec sessionSpecAnswerToProcess = event.getMediaServerSdp();
 		assertNotNull(sessionSpecAnswerToProcess);
 
-		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);

@@ -51,7 +51,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		SessionSpec sessionSpecOfferToProcess = event.getMediaServerSdp();
 		assertNotNull(sessionSpecOfferToProcess);
 
-		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -66,7 +66,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		nc.release();
 		// ///////////////////////////
 
-		mediaList = sessionSpecOfferToProcess.getMediaSpecs();
+		mediaList = sessionSpecOfferToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Answered SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -74,7 +74,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		// Delete all payloads
 		for (MediaSpec ms : mediaList)
 			if (ms.getPayloads() != null)
-				ms.deleteAllPayloads();
+				ms.setPayloadsIsSet(false);
 
 		sdpManager.processSdpOffer(sessionSpecOfferToProcess);
 		event = listener.poll(WAIT_TIME);
@@ -154,7 +154,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		SessionSpec sessionSpecAnswerToProcess = event.getMediaServerSdp();
 		assertNotNull(sessionSpecAnswerToProcess);
 
-		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -170,7 +170,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		// Delete all payloads
 		for (MediaSpec ms : mediaList)
 			if (ms.getPayloads() != null)
-				ms.deleteAllPayloads();
+				ms.setPayloadsIsSet(false);
 
 		// ///////////////////////////
 		// Process answer
@@ -222,7 +222,7 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		SessionSpec sessionSpecAnswerToProcess = event.getMediaServerSdp();
 		assertNotNull(sessionSpecAnswerToProcess);
 
-		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMediaSpecs();
+		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);

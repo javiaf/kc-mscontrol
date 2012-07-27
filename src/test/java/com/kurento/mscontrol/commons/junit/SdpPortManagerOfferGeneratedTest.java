@@ -49,7 +49,7 @@ public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
 		SessionSpec ss = event.getMediaServerSdp();
 		assertNotNull(ss);
 
-		List<MediaSpec> mediaList = ss.getMediaSpecs();
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
