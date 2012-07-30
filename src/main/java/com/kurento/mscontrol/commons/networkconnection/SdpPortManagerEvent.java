@@ -35,6 +35,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * {@link SdpPortManager#processSdpOffer(SessionSpec)} has completed.
 	 */
 	static final EventType ANSWER_GENERATED = new EventType() {
+		@Override
+		public String toString() {
+			return "ANSWER_GENERATED";
+		}
 	};
 
 	/**
@@ -42,6 +46,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * {@link SdpPortManager#processSdpAnswer(SessionSpec)} has completed.
 	 */
 	static final EventType ANSWER_PROCESSED = new EventType() {
+		@Override
+		public String toString() {
+			return "ANSWER_PROCESSED";
+		}
 	};
 
 	/**
@@ -49,6 +57,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * stream.
 	 */
 	static final EventType NETWORK_STREAM_FAILURE = new EventType() {
+		@Override
+		public String toString() {
+			return "NETWORK_STREAM_FAILURE";
+		}
 	};
 
 	/**
@@ -56,6 +68,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * {@link SdpPortManager#generateSdpOffer()} has completed.
 	 */
 	static final EventType OFFER_GENERATED = new EventType() {
+		@Override
+		public String toString() {
+			return "OFFER_GENERATED";
+		}
 	};
 
 	/**
@@ -64,6 +80,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * {@link SdpPortManager#getMediaServerSessionDescription()} returns null.
 	 */
 	static final MediaErr RESOURCE_UNAVAILABLE = new MediaErr() {
+		@Override
+		public String toString() {
+			return "RESOURCE_UNAVAILABLE";
+		}
 	};
 
 	/**
@@ -71,6 +91,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * attempted to re-negotiate the SDP at the same time.
 	 */
 	static final MediaErr SDP_GLARE = new MediaErr() {
+		@Override
+		public String toString() {
+			return "SDP_GLARE";
+		}
 	};
 
 	/**
@@ -78,6 +102,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * codec for any stream.
 	 */
 	static final MediaErr SDP_NOT_ACCEPTABLE = new MediaErr() {
+		@Override
+		public String toString() {
+			return "SDP_NOT_ACCEPTABLE";
+		}
 	};
 
 	/**
@@ -85,6 +113,10 @@ public interface SdpPortManagerEvent extends MediaEvent<SdpPortManager> {
 	 * the local SDP.
 	 */
 	static final EventType UNSOLICITED_OFFER_GENERATED = new EventType() {
+		@Override
+		public String toString() {
+			return "UNSOLICITED_OFFER_GENERATED";
+		}
 	};
 
 	/**

@@ -22,23 +22,93 @@ package com.kurento.mscontrol.commons;
  */
 public interface MediaErr {
 
-	static final MediaErr BAD_ARG = new MediaErr(){};
-	static final MediaErr BAD_SERVER = new MediaErr(){};
-	static final MediaErr BUSY = new MediaErr(){};
-	static final MediaErr CALL_DROPPED = new MediaErr(){};
-	static final MediaErr INFINITE_LOOP = new MediaErr(){};
+	static final MediaErr BAD_ARG = new MediaErr() {
+		@Override
+		public String toString() {
+			return "BAD_ARG";
+		}
+	};
+	static final MediaErr BAD_SERVER = new MediaErr() {
+		@Override
+		public String toString() {
+			return "BAD_SERVER";
+		}
+	};
+	static final MediaErr BUSY = new MediaErr() {
+		@Override
+		public String toString() {
+			return "BUSY";
+		}
+	};
+	static final MediaErr CALL_DROPPED = new MediaErr() {
+		@Override
+		public String toString() {
+			return "CALL_DROPPED";
+		}
+	};
+	static final MediaErr INFINITE_LOOP = new MediaErr() {
+		@Override
+		public String toString() {
+			return "INFINITE_LOOP";
+		}
+	};
 	
 	/**
 	 * Indicates success: there was no error.
 	 */
-	static final MediaErr NO_ERROR = new MediaErr(){};
-	static final MediaErr NO_TERMINATION = new MediaErr(){};
-	static final MediaErr NOT_FOUND = new MediaErr(){};
-	static final MediaErr NOT_SUPPORTED = new MediaErr(){};
-	static final MediaErr REFUSED = new MediaErr(){};
-	static final MediaErr RESOURCE_UNAVAILABLE = new MediaErr(){};
-	static final MediaErr SERVICE_NOT_DEFINED = new MediaErr(){};
-	static final MediaErr TIMEOUT = new MediaErr(){};
-	static final MediaErr UNKNOWN_ERROR = new MediaErr(){};
+	static final MediaErr NO_ERROR = new MediaErr() {
+		@Override
+		public String toString() {
+			return "NO_ERROR";
+		}
+	};
+	static final MediaErr NO_TERMINATION = new MediaErr() {
+		@Override
+		public String toString() {
+			return "NO_TERMINATION";
+		}
+	};
+	static final MediaErr NOT_FOUND = new MediaErr() {
+		@Override
+		public String toString() {
+			return "NOT_FOUND";
+		}
+	};
+	static final MediaErr NOT_SUPPORTED = new MediaErr() {
+		@Override
+		public String toString() {
+			return "NOT_SUPPORTED";
+		}
+	};
+	static final MediaErr REFUSED = new MediaErr() {
+		@Override
+		public String toString() {
+			return "REFUSED";
+		}
+	};
+	static final MediaErr RESOURCE_UNAVAILABLE = new MediaErr() {
+		@Override
+		public String toString() {
+			return "RESOURCE_UNAVAILABLE";
+		}
+	};
+	static final MediaErr SERVICE_NOT_DEFINED = new MediaErr() {
+		@Override
+		public String toString() {
+			return "SERVICE_NOT_DEFINED";
+		}
+	};
+	static final MediaErr TIMEOUT = new MediaErr() {
+		@Override
+		public String toString() {
+			return "TIMEOUT";
+		}
+	};
+	static final MediaErr UNKNOWN_ERROR = new MediaErr() {
+		@Override
+		public String toString() {
+			return "UNKNOWN_ERROR";
+		}
+	};
 
 }
