@@ -42,6 +42,13 @@ public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
 		sdpManager.generateSdpOffer();
 		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
 		assertNotNull(event);
+		if (SdpPortManagerEvent.RESOURCE_UNAVAILABLE.equals(event.getError())) {
+			log.warn("Resource unavailable, retry generate sdp offer after 1 second");
+			Thread.sleep(1000);
+			sdpManager.generateSdpOffer();
+			event = listener.poll(WAIT_TIME);
+			assertNotNull(event);
+		}
 		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
 		assertEquals(SdpPortManagerEvent.OFFER_GENERATED,
 				event.getEventType());
