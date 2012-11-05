@@ -15,14 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kurento.mscontrol.commons.networkconnection;
+package com.kurento.mscontrol.commons;
 
+import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.SessionSpec;
-import com.kurento.mscontrol.commons.MediaEventNotifier;
-import com.kurento.mscontrol.commons.resource.Resource;
 
 /**
- * Handle a set of media ports, defined by a pair of Session Descriptions.
+ * A NetworkConnection is a {@link JoinableContainer} that drives network media
+ * ports.<br>
+ * <p>
+ * A NetworkConnection can be created with
+ * {@link MediaSession#createNetworkConnection()}<br>
+ * Example:<br>
+ * <code>NetworkConnection myNC = myMediaSession.createNetworkConnection();</code>
+ * 
+ * It handles a set of media ports, defined by a pair of Session Descriptions.
  * <p>
  * The SdpPortManager is usually contained in a {@link NetworkConnection}.<br>
  * <a href="http://www.ietf.org/rfc/rfc4566.txt">SDP session descriptions
@@ -72,9 +79,9 @@ import com.kurento.mscontrol.commons.resource.Resource;
  *                                         +getMediaServerSdp()
  *       <-------- 200 OK -------------
  *              +mediaServerSDP
- *                 
+ * 
  *       --------- ACK -------------->
- *            
+ * 
  * 
  *  B) incoming INVITE without SDP:
  *   UserAgent                    JSR 309 Application         SdpPortManager
@@ -87,11 +94,11 @@ import com.kurento.mscontrol.commons.resource.Resource;
  *                                         +getMediaServerSdp()
  *       <-------- 200 OK -------------
  *              +mediaServerSDP
- *                 
+ * 
  *       --------- ACK -------------->
  *              +userAgentSDP
  *                                    ------------------------>processSdpAnswer(userAgentSDP)
- *            
+ * 
  * 
  *  C) outgoing INVITE with SDP offer
  *   UserAgent                    JSR 309 Application         SdpPortManager
@@ -136,92 +143,110 @@ import com.kurento.mscontrol.commons.resource.Resource;
  * {@link NetworkConnection}.addListener.
  * </ul>
  */
-public interface SdpPortManager extends Resource<NetworkConnection>,
-		MediaEventNotifier<SdpPortManagerEvent> {
+public abstract class NetworkConnection extends Joinable {
 
 	/**
-	 * Request a SDP offer from the Media Server.
-	 * <p>
 	 * 
-	 * When complete, sends a {@link SdpPortManagerEvent} with an EventType of
-	 * {@link SdpPortManagerEvent#OFFER_GENERATED}.<br>
+	 * @param type
+	 *            MediaType of the stream.
+	 * @param direction
+	 *            of the media.
+	 * @return the bitrate associated to the stream of type
+	 *         <code>streamType</code> where the media flow in direction
+	 *         <code>direction</code>.
+	 */
+	public abstract long getBitrate(MediaType type, Direction direction);
+
+	/**
+	 * This method allows to get information about the network connection, see
+	 * each platform documentation to know which information can be get.
+	 * 
+	 * @param params
+	 *            The parameters with the information to get
+	 */
+	public abstract void getInfo(Parameters params);
+
+	/**
+	 * Releases the resources associated to this NetworkConnection.
+	 * <p>
+	 * The call is cascaded to the children of this object (the objects created
+	 * by it).
+	 * </p>
+	 * Calling this methods also releases all SessionSpecs that have been
+	 * negotiated before this point.
+	 */
+	public abstract void release();
+
+	/**
+	 * Request that all pending allocations/initializations are completed.
+	 * 
+	 * @throws java.lang.IllegalStateException
+	 *             if the container has been released
+	 * @throws MediaSessionException
+	 */
+	public abstract void confirm() throws MediaSessionException;
+
+	/**
+	 * Request a SessionSpec offer.
+	 * 
+	 * <p>
 	 * The resulting offer is available with
-	 * {@link SdpPortManagerEvent#getMediaServerSdp()}
+	 * {@link NetworkConnection#getSessionSpec()}
+	 * </p>
+	 * 
 	 * <p>
 	 * This can be used to initiate a connection, or to increase/augment the
 	 * capabilities of an established connection, like for example adding a
 	 * video stream to an audio-only connection.
+	 * </p>
 	 * 
-	 * @throws SdpPortManagerException
+	 * @param cont
+	 *            Continuation object to notify when operation completes
 	 */
-	void generateSdpOffer() throws SdpPortManagerException;
+	public abstract void generateSessionSpecOffer(Continuation cont);
 
 	/**
-	 * Request the MediaServer to process the given SDP offer (from the remote
-	 * User Agent).<br>
-	 * When complete, sends a SdpPortManagerEvent with an EventType of
-	 * {@link SdpPortManagerEvent#ANSWER_GENERATED}.<br>
+	 * Request the NetworkConnection to process the given SessionSpec offer
+	 * (from the remote User Agent).<br>
 	 * The resulting answer is available with
-	 * {@link SdpPortManagerEvent#getMediaServerSdp()}
+	 * {@link NetworkConnection#getSessionSpec()} and the remote offer will be
+	 * returned by {@link NetworkConnection#getRemoteSessionSpec()}
 	 * 
 	 * @param offer
-	 *            SDP offer from the remote User Agent
-	 * @throws SdpPortManagerException
+	 *            SessionSpec offer from the remote User Agent
+	 * @param cont
+	 *            Continuation object to notify when operation completes
 	 */
-	void processSdpOffer(SessionSpec offer) throws SdpPortManagerException;
+	public abstract void processSessionSpecOffer(SessionSpec offer,
+			Continuation cont);
 
 	/**
-	 * Request the Media Server to process the given SDP answer (from the remote
-	 * User Agent).<br>
-	 * When complete, sends a {@link SdpPortManagerEvent} with an EventType of
-	 * {@link SdpPortManagerEvent#ANSWER_PROCESSED}.<br>
+	 * Request the NetworkConnection to process the given SessionSpec answer
+	 * (from the remote User Agent).<br>
+	 * The answer become available on method
+	 * {@link NetworkConnection#getRemoteSessionSpec()}
 	 * 
 	 * @param answer
-	 *            SDP answer from the remote User Agent
-	 * @throws SdpPortManagerException
+	 *            SessionSpec answer from the remote User Agent
+	 * @param cont
+	 *            Continuation object to notify when operation completes
 	 */
-	void processSdpAnswer(SessionSpec answer) throws SdpPortManagerException;
+	public abstract void processSessionSpecAnswer(SessionSpec answer,
+			Continuation cont);
 
 	/**
-	 * Cancel the SDP offer that previously was requested with {@link
-	 * generateSdpOffer()}.
+	 * This method gives access to the SessionSpec offered by this
+	 * NetworkConnection
+	 * 
 	 * <p>
-	 * The media server is allowed to free the resources associated to the offer
-	 * (including RTP ports).<br>
-	 * Usages of this method include a SDP "glare" case, see <a
-	 * href="http://www.ietf.org/rfc/rfc3261.txt">RFC 3261</a>.
-	 * <p>
-	 * 
-	 * Note that in usual operation, the media server resources are released
-	 * when the containing NetworkConnection is released, and the application is
-	 * not required to call this method.
-	 * 
-	 * @throws SdpPortManagerException
-	 */
-	void rejectSdpOffer() throws SdpPortManagerException;
-
-	/**
-	 * This method gives access to the Media Server session description for
-	 * media streams.
-	 * <p>
-	 * This session description describes what the media server is willing to
-	 * accept, according to the
-	 * 
-	 * <a href="http://www.ietf.org/rfc/rfc3264.txt">offer/answer algorithm</a><br>
-	 * 
 	 * <b>Note:</b> This method returns the media previously agreed after a
-	 * complete offer-answer exchange. If no media has been agreed yet, it
-	 * returns null. If an offer is in progress from either side, that offer's
-	 * session description is not returned here.<br>
-	 * As a result, the offer generated by {@link generateSdpOffer()} must be
-	 * retrieved from the completion event, see
-	 * {@link SdpPortManagerEvent#getMediaServerSdp()}.
+	 * complete offer-answer exchange. If no offer has been generated yet, it
+	 * returns null.
+	 * </p>
 	 * 
-	 * @return The last agreed Media Server session description
-	 * @throws SdpPortManagerException
+	 * @return The last agreed SessionSpec
 	 */
-	SessionSpec getMediaServerSessionDescription()
-			throws SdpPortManagerException;
+	public abstract SessionSpec getSessionSpec();
 
 	/**
 	 * This method gives access to the User Agent session description for media
@@ -229,15 +254,38 @@ public interface SdpPortManager extends Resource<NetworkConnection>,
 	 * <p>
 	 * The User Agent is the "remote" end (for example a SipPhone), by
 	 * opposition to the Media Server end.
-	 * <p>
+	 * </p>
 	 * 
+	 * <p>
 	 * <b>Note:</b> This method returns the media previously agreed after a
 	 * complete offer-answer exchange. If no media has been agreed yet, it
 	 * returns null.
+	 * </p>
 	 * 
 	 * @return The last agreed User Agent session description
-	 * @throws SdpPortManagerException
 	 */
-	SessionSpec getUserAgentSessionDescription() throws SdpPortManagerException;
+	public abstract SessionSpec getRemoteSessionSpec();
 
+	/**
+	 * Used as a callback for some NetworkConnection actions
+	 * 
+	 */
+	public interface Continuation {
+
+		/**
+		 * This method is called when the operation sucess
+		 * 
+		 * @param session
+		 *            The generated session spec
+		 */
+		public void onSucess(SessionSpec spec);
+
+		/**
+		 * This method gets called when the operation fails
+		 * 
+		 * @param cause
+		 *            The cause of the failure
+		 */
+		public void onError(Throwable cause);
+	}
 }

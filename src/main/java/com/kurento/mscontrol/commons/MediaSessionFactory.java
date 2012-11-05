@@ -1,6 +1,6 @@
 /*
  * Kurento Commons MSControl: Simplified Media Control API for the Java Platform based on jsr309
- * Copyright (C) 2011  Tikal Technologies
+ * Copyright (C) 2012  Tikal Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3
@@ -17,20 +17,14 @@
 
 package com.kurento.mscontrol.commons;
 
-/**
- * The class of objects that can send MediaEvent to listeners
- */
-public interface MediaEventNotifier<T extends MediaEvent<?>> {
+public interface MediaSessionFactory {
 
 	/**
-	 * Add a listener class. The listener will be called when the operation
-	 * completes.
+	 * Creates a new mediaSession object
+	 * 
+	 * @return New media session for a platform
+	 * @throws MediaSessionException
 	 */
-	public void addListener(MediaEventListener<T> listener);
-
-	/**
-	 * Remove a listener that was previously added
-	 */
-	public void removeListener(MediaEventListener<T> listener);
+	public MediaSession createMediaSession() throws MediaSessionException;
 
 }

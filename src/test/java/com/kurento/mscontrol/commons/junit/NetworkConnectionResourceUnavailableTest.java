@@ -1,19 +1,22 @@
 package com.kurento.mscontrol.commons.junit;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
+import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
-import com.kurento.mscontrol.commons.junit.util.SdpPortManagerListener;
+import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManager;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
 
-public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
+public class NetworkConnectionResourceUnavailableTest extends TestCaseBase {
 
 	private static final int WAIT_TIME = 5;
+	private final static TimeUnit WAIT_UNIT = TimeUnit.SECONDS;
+	private SessionSpec ss;
 
 	/**
 	 * Test to check that {@link SdpPortManager#generateSdpOffer()} generate a
@@ -43,19 +46,25 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testGenerateOffer() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
 
 		// ///////////////////////////
 		// Generate offer OK
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		SessionSpec ss = event.getMediaServerSdp();
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				fail("Erorr generating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 		assertNotNull(ss);
 
 		List<MediaSpec> mediaList = ss.getMedias();
@@ -73,13 +82,20 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 
 		// ///////////////////////////
 		// Generate offer fail
-		sdpManager.generateSdpOffer();
-		event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.RESOURCE_UNAVAILABLE, event.getError());
-		assertNull(event.getEventType());
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		assertNull(event.getMediaServerSdp());
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("Second offer should raise an errror");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 		// ///////////////////////////
 	}
 
@@ -111,22 +127,32 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testProcessOffer() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		ss = null;
+		nc.release();
+		nc = getMediaSession().createNetworkConnection(new Parameters());
+
+		final Semaphore sem = new Semaphore(0);
 
 		// ///////////////////////////
 		// Generate offer OK
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		SessionSpec sessionSpecOfferToProcess = event.getMediaServerSdp();
-		assertNotNull(sessionSpecOfferToProcess);
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
 
-		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMedias();
+			@Override
+			public void onError(Throwable cause) {
+				fail("Error generating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
+		assertNotNull(ss);
+
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -141,13 +167,20 @@ public class SdpPortManagerResourceUnavailableTest extends TestCaseBase {
 
 		// ///////////////////////////
 		// Process offer fail
-		sdpManager.processSdpOffer(sessionSpecOfferToProcess);
-		event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.RESOURCE_UNAVAILABLE, event.getError());
-		assertNull(event.getEventType());
+		nc.processSessionSpecOffer(ss, new Continuation() {
 
-		assertNull(event.getMediaServerSdp());
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("Process an offer after generated an offer should fail");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 		// ///////////////////////////
 	}
 

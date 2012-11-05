@@ -1,19 +1,21 @@
 package com.kurento.mscontrol.commons.junit;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
-import com.kurento.mscontrol.commons.junit.util.SdpPortManagerListener;
+import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManager;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
 
-public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
+public class NetworkConnectionOfferGeneratedTest extends TestCaseBase {
 
 	private static final int WAIT_TIME = 5;
+	private final static TimeUnit WAIT_UNIT = TimeUnit.SECONDS;
+	private SessionSpec ss;
 
 	/**
 	 * Test to check that {@link SdpPortManager#generateSdpOffer()} generate a
@@ -35,25 +37,22 @@ public class SdpPortManagerOfferGeneratedTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testOfferGenerated() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		if (SdpPortManagerEvent.RESOURCE_UNAVAILABLE.equals(event.getError())) {
-			log.warn("Resource unavailable, retry generate sdp offer after 1 second");
-			Thread.sleep(1000);
-			sdpManager.generateSdpOffer();
-			event = listener.poll(WAIT_TIME);
-			assertNotNull(event);
-		}
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED,
-				event.getEventType());
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
 
-		SessionSpec ss = event.getMediaServerSdp();
+			@Override
+			public void onError(Throwable cause) {
+				fail("Error gerating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 		assertNotNull(ss);
 
 		List<MediaSpec> mediaList = ss.getMedias();

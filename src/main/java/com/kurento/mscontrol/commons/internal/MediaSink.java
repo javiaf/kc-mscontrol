@@ -1,6 +1,6 @@
 /*
  * Kurento Commons MSControl: Simplified Media Control API for the Java Platform based on jsr309
- * Copyright (C) 2011  Tikal Technologies
+ * Copyright (C) 2012  Tikal Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3
@@ -15,22 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kurento.mscontrol.commons.networkconnection;
+package com.kurento.mscontrol.commons.internal;
 
-import com.kurento.mscontrol.commons.MsControlException;
+import com.kurento.mscontrol.commons.MediaType;
 
 /**
- * General purpose exception for the SdpPortManager.
+ * A MediaSink receives media from a connected MediaSrc (if any)
+ * 
+ * @param <T>
  */
-public class SdpPortManagerException extends MsControlException {
+public interface MediaSink<T extends MediaType> extends MediaStream<T> {
 
-	private static final long serialVersionUID = -4630071192467596504L;
-
-	public SdpPortManagerException(String message) {
-		super(message);
-	}
-
-	public SdpPortManagerException(String message, Throwable cause) {
-		super(message, cause);
-	}
+	/**
+	 * Returns the Joined MediaSrc or null if not joined
+	 * 
+	 * @return The joined MediaSrc or null if not joined
+	 */
+	public MediaSrc<T> getJoineeSrc();
 }

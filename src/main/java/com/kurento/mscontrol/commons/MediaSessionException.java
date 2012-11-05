@@ -15,14 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kurento.mscontrol.commons.resource;
+package com.kurento.mscontrol.commons;
 
 /**
- * Interface for things common to Resources. Every Resource interface (like
- * SdpPortManager) extends this interface.
+ * General purpose exception.
  */
-public interface Resource<T extends ResourceContainer> {
+public class MediaSessionException extends Exception {
 
-	public T getContainer();
+	private static final long serialVersionUID = 5114447844981856910L;
+
+	/**
+	 * Constructs a MsControlException with the specified detail message
+	 * 
+	 * @param message
+	 *            the detail message
+	 */
+	public MediaSessionException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Constructs a MsControlException with its origin and the specified detail
+	 * message
+	 * 
+	 * @param message
+	 *            the detail message
+	 * @param cause
+	 */
+	public MediaSessionException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }
