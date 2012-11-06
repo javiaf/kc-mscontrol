@@ -47,27 +47,12 @@ public abstract class Joinable {
 	/**
 	 * Establish a media stream between this object and <code>other</code>.
 	 * <p>
-	 * The Direction argument indicates a direction; The order of the arguments
-	 * helps to remember which is the origin and which is the destination. For
-	 * example:<br>
-	 * <code><b>objectA</b>.join(Direction.<b>SEND</b>, <b>objectB</b>);</code><br>
-	 * means that <br>
-	 * <code><b>objectA sends to objectB</b></code><br>
-	 * The result is strictly equivalent <code>to objectB.join(Direction.RECV,
-	 * objectA).</code>
-	 * <p>
 	 * 
-	 * <h3><b>Joining again the same pair of objects ("re-joining")</b></h3>
-	 * <p>
-	 * The given direction <b>replaces</b> a possibly existing relationship
-	 * between the objects.<br>
-	 * For example:<br>
-	 * <code>ObjectA.join(REVC, ObjectB)</code><br>
-	 * followed by<br>
-	 * <code>ObjectA.join(SEND, ObjectB)</code><br>
-	 * results in ObjectA sending to ObjectB (not duplex, the <code>SEND</code>
-	 * direction is <b>not</b> "added" to the <code>RECV</code> direction).
-	 * <p>
+	 * This method does not return error if at least one connection of any
+	 * MediaType and/or Direction can be established. <br/>
+	 * This method is offered for simplify applications, but the control of the
+	 * links is lost by the application because no notification of what links
+	 * succeed or failed is done.
 	 * 
 	 * <h3><b>Joining an object to multiple other objects</b></h3>
 	 * <p>
@@ -94,7 +79,43 @@ public abstract class Joinable {
 	 *             if the object has been released
 	 */
 	public void join(Joinable other) throws MediaSessionException {
-		// TODO: implement this method
+		boolean joined = false;
+
+		Collection<? extends MediaType> types = getMediaTypes();
+		for (MediaType type : types) {
+			Collection<MediaSrc<MediaType>> srcs = getMediaSrcs(type);
+			Collection<MediaSink<MediaType>> sinks = other.getMediaSinks(type);
+
+			for (MediaSrc<MediaType> src : srcs) {
+				for (MediaSink<MediaType> sink : sinks) {
+					try {
+						src.join(sink);
+						joined = true;
+					} catch (MediaSessionException e) {
+						// No action needed
+					}
+				}
+			}
+
+			srcs = other.getMediaSrcs(type);
+			sinks = getMediaSinks(type);
+
+			for (MediaSrc<MediaType> src : srcs) {
+				for (MediaSink<MediaType> sink : sinks) {
+					try {
+						src.join(sink);
+						joined = true;
+					} catch (MediaSessionException e) {
+						// No action needed
+					}
+				}
+			}
+		}
+
+		if (!joined) {
+			throw new MediaSessionException(
+					"Unable to stablish at least one connection");
+		}
 	}
 
 	/**
