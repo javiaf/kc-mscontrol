@@ -292,7 +292,7 @@ public abstract class Joinable {
 	 *             if the object has been released
 	 */
 	public void unjoin(Joinable other) throws MediaSessionException {
-		// TODO: Implement this
+		unjoin(Direction.DUPLEX, other);
 	}
 
 	/**
@@ -311,7 +311,11 @@ public abstract class Joinable {
 	 */
 	public void unjoin(Direction direction, Joinable other)
 			throws MediaSessionException {
-		// TODO: Implement this
+		Collection<? extends MediaType> types = getMediaTypes();
+
+		for (MediaType type : types) {
+			unjoin(direction, type, other);
+		}
 	}
 
 	/**
@@ -329,7 +333,28 @@ public abstract class Joinable {
 	 */
 	public void unjoin(Direction direction, MediaType type, Joinable other)
 			throws MediaSessionException {
-		// TODO: Implement this
+		if (direction.equals(Direction.SEND)
+				|| direction.equals(Direction.DUPLEX)) {
+			other.unjoinRecv(type, other);
+		}
+
+		if (direction.equals(Direction.RECV)
+				|| direction.equals(Direction.DUPLEX)) {
+			unjoinRecv(type, this);
+		}
+	}
+
+	private void unjoinRecv(MediaType type, Joinable other)
+			throws MediaSessionException {
+		Collection<MediaSrc<MediaType>> srcs = other.getMediaSrcs(type);
+		Collection<MediaSink<MediaType>> sinks = getMediaSinks(type);
+
+		for (MediaSink<MediaType> sink : sinks) {
+			MediaSrc<MediaType> src = sink.getJoineeSrc();
+			if (src != null && srcs.contains(src)) {
+				src.unjoin(sink);
+			}
+		}
 	}
 
 }
