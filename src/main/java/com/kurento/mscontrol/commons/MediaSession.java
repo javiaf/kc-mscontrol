@@ -52,13 +52,13 @@ public interface MediaSession {
 	 * Create a <code>MediaMixer</code>.
 	 * 
 	 * @param params
-	 *            Customization parameters to create a MediaMixer. The possible
-	 *            parameters for each specific MediaMixer must be defined on the
+	 *            Customization parameters to create a Mixer. The possible
+	 *            parameters for each specific Mixer must be defined on the
 	 *            implementation.
-	 * @return a MediaMixer
+	 * @return a Mixer
 	 * @throws MediaSessionException
 	 */
-	public Mixer createMediaMixer(Parameters params)
+	public Mixer createMixer(Parameters params)
 			throws MediaSessionException;
 
 	/**
