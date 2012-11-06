@@ -17,6 +17,8 @@
 
 package com.kurento.mscontrol.commons;
 
+import com.kurento.commons.config.Parameters;
+
 /**
  * This class is the entry point where a MediaSession can be obtained
  * 
@@ -24,12 +26,16 @@ package com.kurento.mscontrol.commons;
 public interface MediaSessionFactory {
 
 	/**
-	 * Creates a new mediaSession object
+	 * Creates a new mediaSession object using the given configuration
+	 * parameters. See platform documentation for further details about the
+	 * parameters.
 	 * 
+	 * @param parameters
+	 *            The configuration of the MediaSession
 	 * @return New media session for a platform
 	 * @throws MediaSessionException
 	 */
-	public MediaSession createMediaSession()
+	public MediaSession createMediaSession(Parameters parameters)
 			throws MediaSessionException;
 
 }
