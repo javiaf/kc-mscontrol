@@ -171,16 +171,22 @@ public abstract class Joinable {
 	 */
 	public void join(Direction direction, Joinable other)
 			throws MediaSessionException {
+		boolean joined = false;
 		Collection<? extends MediaType> types = getMediaTypes();
+
 		for (MediaType type : types) {
-			Collection<MediaSrc<MediaType>> srcs = getMediaSrcs(type);
-			Collection<MediaSink<MediaType>> sinks = other.getMediaSinks(type);
-			// TODO: Continue implementing this
+			join(direction, type, other);
+			joined = true;
 		}
+
+		if (!joined)
+			throw new MediaSessionException(
+					"Can not join with requested conditions");
 	}
 
 	/**
-	 * Establish a media stream between this object and <code>other</code>.
+	 * Establish a media stream between this object and <code>other</code> for
+	 * the selected MediaType.
 	 * <p>
 	 * The Direction argument indicates a direction; The order of the arguments
 	 * helps to remember which is the origin and which is the destination. For
@@ -226,7 +232,7 @@ public abstract class Joinable {
 	 *            indicates direction (DUPLEX, SEND, RECV)
 	 * @param type
 	 *            indicates the type of the stream to connect (for example audio
-	 *            or video only)
+	 *            or video)
 	 * @param other
 	 *            Joinable object to connect
 	 * @throws MediaSessionException
@@ -235,7 +241,41 @@ public abstract class Joinable {
 	 */
 	public void join(Direction direction, MediaType type, Joinable other)
 			throws MediaSessionException {
-		// TODO: Implement this.
+		boolean joined = false;
+
+		if (direction.equals(Direction.SEND)
+				|| direction.equals(Direction.DUPLEX)) {
+			joinSend(type, other);
+			joined = true;
+		}
+
+		if (direction.equals(Direction.RECV)
+				|| direction.equals(Direction.DUPLEX)) {
+			other.joinSend(type, this);
+			joined = true;
+		}
+
+		if (!joined)
+			throw new MediaSessionException(
+					"Can not join with requested conditions");
+	}
+
+	private void joinSend(MediaType type, Joinable other)
+			throws MediaSessionException {
+		Collection<MediaSrc<MediaType>> srcs = getMediaSrcs(type);
+		Collection<MediaSink<MediaType>> sinks = other.getMediaSinks(type);
+
+		boolean joined = false;
+		for (MediaSrc<MediaType> src : srcs) {
+			for (MediaSink<MediaType> sink : sinks) {
+				src.join(sink);
+				joined = true;
+			}
+		}
+
+		if (!joined)
+			throw new MediaSessionException(
+					"Cannot join with requested conditions");
 	}
 
 	/**
