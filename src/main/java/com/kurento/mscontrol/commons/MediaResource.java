@@ -19,6 +19,24 @@ package com.kurento.mscontrol.commons;
 
 import com.kurento.commons.config.Parameters;
 
+/**
+ * Describes a container of media sources or media sinks.
+ * 
+ * <p>
+ * A MediaResource is a container of elements that can consume or provide media
+ * streams. They are configured via Parameters that depends on the
+ * implementation.
+ * 
+ * <p>
+ * Sources or sinks contained by MediaResource are controlled with
+ * {@link #setConfiguration(Parameters)} method. See documentation of each
+ * implementation for further details about available configurations.
+ * 
+ * <p>
+ * MediaResource extends {@link Joinable} so it can be linked with any other
+ * implementation of Joinable.
+ * 
+ */
 public abstract class MediaResource extends Joinable {
 
 	MediaResource() {

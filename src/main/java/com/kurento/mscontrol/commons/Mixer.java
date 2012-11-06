@@ -35,9 +35,10 @@ import com.kurento.commons.config.Parameters;
 public interface Mixer {
 
 	/**
-	 * This method provides a joinable suitable to send and receive media from
-	 * this mixer. This Joinable has a related MediaSink and MediaSrc, the
-	 * MediaSrc emmits all streams except the one from associated MediaSink.
+	 * This method provides a {@link Joinable} suitable to send and receive
+	 * media from this mixer. This Joinable has a related MediaSink and
+	 * MediaSrc, the MediaSrc emits all streams except the one from associated
+	 * MediaSink.
 	 * 
 	 * @return a media joinable.
 	 */
@@ -49,11 +50,11 @@ public interface Mixer {
 	 * {@link Mixer#getJoinable()}
 	 * </p>
 	 * <p>
-	 * Before calling this method the joinable can not be used
+	 * Before calling this method the Joinable can not be used
 	 * </p>
 	 * 
 	 * @param joinable
-	 *            The joinable to release
+	 *            The Joinable to release
 	 */
 	public void releaseJoinable(Joinable joinable);
 

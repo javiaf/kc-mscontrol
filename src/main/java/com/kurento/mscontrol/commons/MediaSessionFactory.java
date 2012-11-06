@@ -17,6 +17,10 @@
 
 package com.kurento.mscontrol.commons;
 
+/**
+ * This class is the entry point where a MediaSession can be obtained
+ * 
+ */
 public interface MediaSessionFactory {
 
 	/**
@@ -25,6 +29,7 @@ public interface MediaSessionFactory {
 	 * @return New media session for a platform
 	 * @throws MediaSessionException
 	 */
-	public MediaSession createMediaSession() throws MediaSessionException;
+	public MediaSession createMediaSession()
+			throws MediaSessionException;
 
 }

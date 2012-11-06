@@ -35,12 +35,11 @@ public interface MediaSession {
 			throws MediaSessionException;
 
 	/**
-	 * </p> Create a joinable depending on given parameters
-	 * <code>Joinable</code>.
+	 * Creates a MediaResource depending on given parameters.
 	 * 
 	 * @param params
-	 *            Parameters to create a generic Joinable. The possible
-	 *            parameters for each type must be defined on the
+	 *            Customization parameters to create a generic MediaResource.
+	 *            The possible parameters for each type must be defined on the
 	 *            implementation.
 	 * @return a Joinable
 	 * @throws MediaSessionException
@@ -49,7 +48,7 @@ public interface MediaSession {
 			throws MediaSessionException;
 
 	/**
-	 * Create a <code>Mixer</code>.
+	 * Creates a <code>Mixer</code>.
 	 * 
 	 * @param params
 	 *            Customization parameters to create a Mixer. The possible

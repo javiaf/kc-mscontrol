@@ -154,8 +154,7 @@ public abstract class NetworkConnection extends Joinable {
 	/**
 	 * Releases the resources associated to this NetworkConnection.
 	 * <p>
-	 * The call is cascaded to the children of this object (the objects created
-	 * by it).
+	 * The call is cascaded to the children of this object.
 	 * </p>
 	 * Calling this methods also releases all SessionSpecs that have been
 	 * negotiated before this point.
@@ -180,9 +179,7 @@ public abstract class NetworkConnection extends Joinable {
 	 * </p>
 	 * 
 	 * <p>
-	 * This can be used to initiate a connection, or to increase/augment the
-	 * capabilities of an established connection, like for example adding a
-	 * video stream to an audio-only connection.
+	 * This can be used to initiate a connection.
 	 * </p>
 	 * 
 	 * @param cont
@@ -200,7 +197,8 @@ public abstract class NetworkConnection extends Joinable {
 	 * @param offer
 	 *            SessionSpec offer from the remote User Agent
 	 * @param cont
-	 *            Continuation object to notify when operation completes
+	 *            Continuation object to notify when operation completes and to
+	 *            provide the answer SessionSpec.
 	 */
 	public abstract void processSessionSpecOffer(SessionSpec offer,
 			Continuation cont);
@@ -214,7 +212,8 @@ public abstract class NetworkConnection extends Joinable {
 	 * @param answer
 	 *            SessionSpec answer from the remote User Agent
 	 * @param cont
-	 *            Continuation object to notify when operation completes
+	 *            Continuation object to notify when operation completes,
+	 *            returned SessionSpec is the local SessionSpec.
 	 */
 	public abstract void processSessionSpecAnswer(SessionSpec answer,
 			Continuation cont);
@@ -224,9 +223,10 @@ public abstract class NetworkConnection extends Joinable {
 	 * NetworkConnection
 	 * 
 	 * <p>
-	 * <b>Note:</b> This method returns the media previously agreed after a
-	 * complete offer-answer exchange. If no offer has been generated yet, it
-	 * returns null.
+	 * <b>Note:</b> This method returns the local MediaSpec, negotiated or not.
+	 * If no offer has been generated yet, it returns null. It an offer has been
+	 * generated it returns the offer and if an asnwer has been processed it
+	 * returns the negotiated local SessionSpec.
 	 * </p>
 	 * 
 	 * @return The last agreed SessionSpec
@@ -234,12 +234,7 @@ public abstract class NetworkConnection extends Joinable {
 	public abstract SessionSpec getSessionSpec();
 
 	/**
-	 * This method gives access to the User Agent session description for media
-	 * streams.
-	 * <p>
-	 * The User Agent is the "remote" end (for example a SipPhone), by
-	 * opposition to the Media Server end.
-	 * </p>
+	 * This method gives access to the remote session description.
 	 * 
 	 * <p>
 	 * <b>Note:</b> This method returns the media previously agreed after a
@@ -252,13 +247,13 @@ public abstract class NetworkConnection extends Joinable {
 	public abstract SessionSpec getRemoteSessionSpec();
 
 	/**
-	 * Used as a callback for some NetworkConnection actions
+	 * Used as a callback for some asynchronous NetworkConnection actions
 	 * 
 	 */
 	public interface Continuation {
 
 		/**
-		 * This method is called when the operation sucess
+		 * This method is called when the operation success
 		 * 
 		 * @param spec
 		 *            The generated session spec
