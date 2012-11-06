@@ -49,7 +49,7 @@ public interface MediaSession {
 			throws MediaSessionException;
 
 	/**
-	 * Create a <code>MediaMixer</code>.
+	 * Create a <code>Mixer</code>.
 	 * 
 	 * @param params
 	 *            Customization parameters to create a Mixer. The possible

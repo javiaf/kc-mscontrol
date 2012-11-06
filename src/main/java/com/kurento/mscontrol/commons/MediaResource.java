@@ -25,7 +25,7 @@ public abstract class MediaResource extends Joinable {
 	 * Sets current element configuration. If there is a previous configuration
 	 * it modifies this configuration.
 	 * 
-	 * @param params
+	 * @param parameters
 	 *            The configuration to update
 	 */
 	public abstract void setConfiguration(Parameters parameters);
@@ -34,7 +34,7 @@ public abstract class MediaResource extends Joinable {
 	 * This method allows to get information about the network connection, see
 	 * documentation of each platform to know which information can be get.
 	 * 
-	 * @param params
+	 * @param parameters
 	 *            The parameters with the information to get
 	 */
 	public abstract void getInfo(Parameters parameters);
