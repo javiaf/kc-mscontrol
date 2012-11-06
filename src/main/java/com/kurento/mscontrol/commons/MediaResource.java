@@ -21,6 +21,10 @@ import com.kurento.commons.config.Parameters;
 
 public abstract class MediaResource extends Joinable {
 
+	MediaResource() {
+
+	}
+
 	/**
 	 * Sets current element configuration. If there is a previous configuration
 	 * it modifies this configuration.

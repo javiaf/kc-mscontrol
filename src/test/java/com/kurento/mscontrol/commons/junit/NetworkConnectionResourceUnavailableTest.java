@@ -9,6 +9,7 @@ import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
+import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
 
@@ -19,9 +20,9 @@ public class NetworkConnectionResourceUnavailableTest extends TestCaseBase {
 	private SessionSpec ss;
 
 	/**
-	 * Test to check that {@link SdpPortManager#generateSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#OFFER_GENERATED} when it generates a correct
-	 * SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#generateSessionSpecOffer(Continuation)} raises
+	 * an error when it is called twice
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -100,9 +101,10 @@ public class NetworkConnectionResourceUnavailableTest extends TestCaseBase {
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#generateSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#OFFER_GENERATED} when it generates a correct
-	 * SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * raises an error when it is called after
+	 * {@link NetworkConnection#generateSessionSpecOffer(Continuation)}
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set

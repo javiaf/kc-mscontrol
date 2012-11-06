@@ -34,6 +34,10 @@ import com.kurento.mscontrol.commons.internal.MediaSrc;
  */
 public abstract class Joinable {
 
+	Joinable() {
+
+	}
+
 	abstract Collection<? extends MediaType> getMediaTypes();
 
 	abstract <T extends MediaType> Collection<MediaSrc<T>> getMediaSrcs(T type);

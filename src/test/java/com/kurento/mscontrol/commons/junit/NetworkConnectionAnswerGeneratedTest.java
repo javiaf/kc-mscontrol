@@ -8,6 +8,7 @@ import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
+import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
 
@@ -20,9 +21,9 @@ public class NetworkConnectionAnswerGeneratedTest extends TestCaseBase {
 	private SessionSpec sessionSpecAnswer = null;
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#ANSWER_GENERATED} when it process a correct
-	 * SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * generate an answer when it process a correct SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set

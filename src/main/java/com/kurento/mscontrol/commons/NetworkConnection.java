@@ -21,27 +21,23 @@ import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.SessionSpec;
 
 /**
- * A NetworkConnection is a {@link JoinableContainer} that drives network media
- * ports.<br>
+ * A NetworkConnection is a {@link Joinable} that drives network media ports.<br>
  * <p>
  * A NetworkConnection can be created with
- * {@link MediaSession#createNetworkConnection()}<br>
+ * {@link MediaSession#createNetworkConnection(Parameters)}<br>
  * Example:<br>
  * <code>NetworkConnection myNC = myMediaSession.createNetworkConnection();</code>
  * 
- * It handles a set of media ports, defined by a pair of Session Descriptions.
+ * It handles a set of media ports, defined by a {@link SessionSpec}.
  * <p>
- * The SdpPortManager is usually contained in a {@link NetworkConnection}.<br>
- * <a href="http://www.ietf.org/rfc/rfc4566.txt">SDP session descriptions
- * (rfc4566)</a> are used to setup a SdpPortManager.<br>
- * A SdpPortManager can handle multiple streams (audio, video), each of them
- * described by an SDP media description.
+ * A NetworkConnection can handle multiple streams (audio, video), each of them
+ * described by an {@link MediaSession} description.
  * <p>
  * 
  * <pre>
  *  --------------------------------------------------------------------------------
  *  -                                           stream(media description) <-rtp--->-
- *  -   SdpPortManager(session description)     stream(media description) <-rtp--->-
+ *  -   NetworkConnection(session description)  stream(media description) <-rtp--->-
  *  -                                           ....                               -
  *  --------------------------------------------------------------------------------
  * </pre>
@@ -62,13 +58,13 @@ import com.kurento.mediaspec.SessionSpec;
  *    ----                                 ---------
  * </pre>
  * 
- * The SdpPortManager is compatible with the offer/answer model.
+ * The NetworkConnection is compatible with the offer/answer model.
  * <p>
  * The Relationship with SIP signaling messages is described below:
  * 
  * <pre>
  *  A) incoming INVITE with SDP offer:
- *   UserAgent                    JSR 309 Application         SdpPortManager
+ *   UserAgent                        Application             NetworkConnection
  *   =============================================================================
  *       ------INVITE----------------->
  *          +userAgentSDP
@@ -84,7 +80,7 @@ import com.kurento.mediaspec.SessionSpec;
  * 
  * 
  *  B) incoming INVITE without SDP:
- *   UserAgent                    JSR 309 Application         SdpPortManager
+ *   UserAgent                        Application             NetworkConnection
  *   =============================================================================
  *       ------INVITE----------------->
  *                                     ---------------------->generateSDPOffer()
@@ -101,7 +97,7 @@ import com.kurento.mediaspec.SessionSpec;
  * 
  * 
  *  C) outgoing INVITE with SDP offer
- *   UserAgent                    JSR 309 Application         SdpPortManager
+ *   UserAgent                        Application             NetworkConnection
  *   =============================================================================
  *                                     ---------------------->generateSDPOffer()
  *                                                                     ...................>(media server)
@@ -120,7 +116,7 @@ import com.kurento.mediaspec.SessionSpec;
  *       <--------- ACK --------------
  *  
  *  D) outgoing INVITE without SDP
- *   UserAgent                    JSR 309 Application         SdpPortManager
+ *   UserAgent                        Application             NetworkConnection
  *   =============================================================================
  *       <------INVITE-----------------
  * 
@@ -136,26 +132,15 @@ import com.kurento.mediaspec.SessionSpec;
  * </pre>
  * 
  * <p>
- * (this is provided as a help in understanding, but the SdpPortManager has no
- * dependency on any signaling protocol, including SIP)
- * <p>
- * To receive the events, the Application must add a MediaEventListener, using
- * {@link NetworkConnection}.addListener.
+ * (this is provided as a help in understanding, but the NetworkConnections has
+ * no dependency on any signaling protocol, including SIP)
+ * </p>
  * </ul>
  */
 public abstract class NetworkConnection extends Joinable {
 
-	/**
-	 * 
-	 * @param type
-	 *            MediaType of the stream.
-	 * @param direction
-	 *            of the media.
-	 * @return the bitrate associated to the stream of type
-	 *         <code>streamType</code> where the media flow in direction
-	 *         <code>direction</code>.
-	 */
-	public abstract long getBitrate(MediaType type, Direction direction);
+	NetworkConnection() {
+	}
 
 	/**
 	 * This method allows to get information about the network connection, see
@@ -275,7 +260,7 @@ public abstract class NetworkConnection extends Joinable {
 		/**
 		 * This method is called when the operation sucess
 		 * 
-		 * @param session
+		 * @param spec
 		 *            The generated session spec
 		 */
 		public void onSucess(SessionSpec spec);

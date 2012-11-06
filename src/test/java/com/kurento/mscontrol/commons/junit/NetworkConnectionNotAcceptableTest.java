@@ -9,6 +9,7 @@ import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
+import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
 
@@ -19,9 +20,9 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 	private SessionSpec ss;
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * generate an error when it process a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -102,9 +103,9 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a null
-	 * SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * generates an error when it process a null SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -144,9 +145,9 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpAnswer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecAnswer(SessionSpec, Continuation)}
+	 * generates an error when it process a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -234,9 +235,9 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpAnswer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecAnswer(SessionSpec, Continuation)}
+	 * generates an error when it processes a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
