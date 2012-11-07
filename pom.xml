@@ -15,8 +15,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- dependencies versions -->
-		<kc-mediaspec.version>2.0.2-SNAPSHOT</kc-mediaspec.version>
-		<kc-config.version>1.0.1-SNAPSHOT</kc-config.version>
+		<kc-mediaspec.version>2.0.2</kc-mediaspec.version>
+		<kc-config.version>1.0.1</kc-config.version>
 	</properties>
 
 	<organization>
