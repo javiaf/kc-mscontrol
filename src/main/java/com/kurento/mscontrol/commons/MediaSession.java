@@ -18,78 +18,54 @@
 package com.kurento.mscontrol.commons;
 
 import com.kurento.commons.config.Parameters;
-import com.kurento.mscontrol.commons.mediacomponent.MediaComponent;
-import com.kurento.mscontrol.commons.mediamixer.MediaMixer;
-import com.kurento.mscontrol.commons.networkconnection.NetworkConnection;
 
 /**
  * A MediaSession is a container and factory for media objects. It handles the
  * cleanup on <code>release()</code>.
  */
-public interface MediaSession extends MediaObject {
+public interface MediaSession {
 
 	/**
 	 * Create a <code>NetworkConnection</code>.
 	 * 
 	 * @return a NetworkConnection
-	 * @throws MsControlException
+	 * @throws MediaSessionException
 	 */
-	public NetworkConnection createNetworkConnection()
-			throws MsControlException;
+	public NetworkConnection createNetworkConnection(Parameters params)
+			throws MediaSessionException;
 
 	/**
-	 * Create a <code>NetworkConnection</code>.
+	 * Creates a MediaResource depending on given parameters.
 	 * 
-	 * @param predefinedConfig
-	 *            Defines the configuration of the NetworkConnection.
-	 * @return a NetworkConnection
-	 * @throws MsControlException
-	 */
-	public NetworkConnection createNetworkConnection(
-			Configuration<NetworkConnection> predefinedConfig)
-			throws MsControlException;
-
-	/**
-	 * </p> Create a <code>MediaComponent</code>.
-	 * 
-	 * @param predefinedConfig
-	 *            Defines the concrete MediaComponent to create. <br>
-	 *            The list of predefined Configurations is dependent on the
-	 *            implementation.
 	 * @param params
-	 *            Parameters to create a MediaComponent. The possible parameters
-	 *            for each specific MediaComponent must be defined on the
+	 *            Customization parameters to create a generic MediaResource.
+	 *            The possible parameters for each type must be defined on the
 	 *            implementation.
-	 * @return a MediaComponent
-	 * @throws MsControlException
+	 * @return a Joinable
+	 * @throws MediaSessionException
 	 */
-	public MediaComponent createMediaComponent(
-			Configuration<MediaComponent> predefinedConfig, Parameters params)
-			throws MsControlException;
+	public MediaResource createResource(Parameters params)
+			throws MediaSessionException;
 
 	/**
-	 * Create a <code>MediaMixer</code>.
+	 * Creates a <code>Mixer</code>.
 	 * 
-	 * @param predefinedConfig
-	 *            Defines the set of resources in the MediaMixer, and their
-	 *            arrangement. See MediaMixer for the list of predefined
-	 *            Configurations.
 	 * @param params
-	 *            Customization parameters to create a MediaMixer. The possible
-	 *            parameters for each specific MediaMixer must be defined on the
+	 *            Customization parameters to create a Mixer. The possible
+	 *            parameters for each specific Mixer must be defined on the
 	 *            implementation.
-	 * @return a MediaMixer
-	 * @throws MsControlException
+	 * @return a Mixer
+	 * @throws MediaSessionException
 	 */
-	public MediaMixer createMediaMixer(
-			Configuration<MediaMixer> predefinedConfig, Parameters params)
-			throws MsControlException;
+	public Mixer createMixer(Parameters params)
+			throws MediaSessionException;
 
 	/**
-	 * Create a <code>MediaMixer</code>.
-	 * 
-	 * @return a MediaMixer
-	 * @throws MsControlException
+	 * Releases the resources associated to this MediaSession.
+	 * <p>
+	 * The call is cascaded to the children of this object (the objects created
+	 * by it).
+	 * </p>
 	 */
-	public MediaMixer createMediaMixer() throws MsControlException;
+	public void release();
 }

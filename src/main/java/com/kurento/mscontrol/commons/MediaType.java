@@ -1,6 +1,6 @@
 /*
  * Kurento Commons MSControl: Simplified Media Control API for the Java Platform based on jsr309
- * Copyright (C) 2011  Tikal Technologies
+ * Copyright (C) 2012  Tikal Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3
@@ -15,14 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kurento.mscontrol.commons.resource;
+package com.kurento.mscontrol.commons;
 
 /**
- * Interface for things common to Resources. Every Resource interface (like
- * SdpPortManager) extends this interface.
+ * Defines the media types of a media stream
+ * 
  */
-public interface Resource<T extends ResourceContainer> {
+public class MediaType {
 
-	public T getContainer();
+	/**
+	 * Audio media type
+	 */
+	public static MediaType AUDIO = new MediaType() {
+			@Override
+			public String toString() {
+				return "AUDIO";
+			}
+	};
 
+	/**
+	 * Video media type
+	 */
+	public static MediaType VIDEO = new MediaType() {
+		@Override
+		public String toString() {
+			return "VIDEO";
+		}
+	};
+
+	MediaType() {
+
+	}
 }

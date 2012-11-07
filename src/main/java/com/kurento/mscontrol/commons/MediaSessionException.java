@@ -17,14 +17,33 @@
 
 package com.kurento.mscontrol.commons;
 
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
-
 /**
- * An EventType indicates the type of event that a Resource sends.<br>
- * For example, a SDP port manager may signal that
- * {@link SdpPortManagerEvent#OFFER_GENERATED OFFER_GENERATED} , or
- * {@link SdpPortManagerEvent#ANSWER_PROCESSED ANSWER_PROCESSED}.
+ * General purpose exception.
  */
-public interface EventType {
+public class MediaSessionException extends Exception {
+
+	private static final long serialVersionUID = 5114447844981856910L;
+
+	/**
+	 * Constructs a MsControlException with the specified detail message
+	 * 
+	 * @param message
+	 *            the detail message
+	 */
+	public MediaSessionException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Constructs a MsControlException with its origin and the specified detail
+	 * message
+	 * 
+	 * @param message
+	 *            the detail message
+	 * @param cause
+	 */
+	public MediaSessionException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

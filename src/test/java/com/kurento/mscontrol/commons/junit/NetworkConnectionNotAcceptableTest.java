@@ -1,24 +1,28 @@
 package com.kurento.mscontrol.commons.junit;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
+import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
 import com.kurento.mscontrol.commons.MediaSession;
-import com.kurento.mscontrol.commons.junit.util.SdpPortManagerListener;
+import com.kurento.mscontrol.commons.NetworkConnection;
+import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManager;
-import com.kurento.mscontrol.commons.networkconnection.SdpPortManagerEvent;
 
-public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
+public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 
 	private static final int WAIT_TIME = 5;
+	private final static TimeUnit WAIT_UNIT = TimeUnit.SECONDS;
+	private SessionSpec ss;
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * generate an error when it process a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -35,23 +39,29 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testProcessSdpOfferWithoutPayloads() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
 
 		// ///////////////////////////
 		// Generate a SessionSpec as offer.
 
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		SessionSpec sessionSpecOfferToProcess = event.getMediaServerSdp();
-		assertNotNull(sessionSpecOfferToProcess);
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
 
-		List<MediaSpec> mediaList = sessionSpecOfferToProcess.getMedias();
+			@Override
+			public void onError(Throwable cause) {
+				fail("Error generating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
+		assertNotNull(ss);
+
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -64,9 +74,10 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 		}
 
 		nc.release();
+		nc = getMediaSession().createNetworkConnection(new Parameters());
 		// ///////////////////////////
 
-		mediaList = sessionSpecOfferToProcess.getMedias();
+		mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Answered SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -76,17 +87,25 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 			if (ms.getPayloads() != null)
 				ms.setPayloadsIsSet(false);
 
-		sdpManager.processSdpOffer(sessionSpecOfferToProcess);
-		event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.SDP_NOT_ACCEPTABLE, event.getError());
-		assertNull(event.getEventType());
+		nc.processSessionSpecOffer(ss, new Continuation() {
+
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("This operation should fail");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpOffer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a null
-	 * SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecOffer(SessionSpec, Continuation)}
+	 * generates an error when it process a null SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -103,21 +122,32 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testProcessSdpNull() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
 
-		sdpManager.processSdpOffer(null);
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.SDP_NOT_ACCEPTABLE, event.getError());
-		assertNull(event.getEventType());
+		ss = null;
+		nc.release();
+		nc = getMediaSession().createNetworkConnection(new Parameters());
+
+		nc.processSessionSpecOffer(null, new Continuation() {
+
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("This operation should fail");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpAnswer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecAnswer(SessionSpec, Continuation)}
+	 * generates an error when it process a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -139,22 +169,33 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testProcessSdpAnswerWithoutPayloads() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
+
+		ss = null;
+		nc.release();
+		nc = getMediaSession().createNetworkConnection(new Parameters());
 
 		// ///////////////////////////
-		// Generate offer
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
+		// Generate a SessionSpec as offer.
 
-		SessionSpec sessionSpecAnswerToProcess = event.getMediaServerSdp();
-		assertNotNull(sessionSpecAnswerToProcess);
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMedias();
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				fail("Error generating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
+		assertNotNull(ss);
+
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -165,27 +206,38 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 			assertTrue("Each MediaSpec must have at least one PayloadSpec.",
 					payloadList.size() > 0);
 		}
+
 		// ///////////////////////////
+
+		mediaList = ss.getMedias();
+		assertNotNull(mediaList);
+		assertTrue("Answered SessionSpec must have at least one MediaSpec.",
+				mediaList.size() > 0);
 
 		// Delete all payloads
 		for (MediaSpec ms : mediaList)
 			if (ms.getPayloads() != null)
 				ms.setPayloadsIsSet(false);
 
-		// ///////////////////////////
-		// Process answer
-		sdpManager.processSdpAnswer(sessionSpecAnswerToProcess);
-		event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.SDP_NOT_ACCEPTABLE, event.getError());
-		assertNull(event.getEventType());
-		// ///////////////////////////
+		nc.processSessionSpecOffer(ss, new Continuation() {
+
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("This operation should fail");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 	}
 
 	/**
-	 * Test to check that {@link SdpPortManager#processSdpAnswer()} generate a
-	 * {@link SdpPortManagerEvent#SDP_NOT_ACCEPTABLE} when it process a
-	 * incorrect SessionSpec.
+	 * Test to check that
+	 * {@link NetworkConnection#processSessionSpecAnswer(SessionSpec, Continuation)}
+	 * generates an error when it processes a incorrect SessionSpec.
 	 * <p>
 	 * 
 	 * Before run this test a correct {@link MediaSession} object must be set
@@ -207,22 +259,32 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 	 * @throws Exception
 	 */
 	public void testProcessSdpAnswerNull() throws Exception {
-		SdpPortManager sdpManager = nc.getSdpPortManager();
-		SdpPortManagerListener listener = new SdpPortManagerListener();
-		sdpManager.addListener(listener);
+		final Semaphore sem = new Semaphore(0);
+
+		ss = null;
+		nc.release();
+		nc = getMediaSession().createNetworkConnection(new Parameters());
 
 		// ///////////////////////////
 		// Generate offer
-		sdpManager.generateSdpOffer();
-		SdpPortManagerEvent event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.NO_ERROR, event.getError());
-		assertEquals(SdpPortManagerEvent.OFFER_GENERATED, event.getEventType());
+		nc.generateSessionSpecOffer(new Continuation() {
 
-		SessionSpec sessionSpecAnswerToProcess = event.getMediaServerSdp();
-		assertNotNull(sessionSpecAnswerToProcess);
+			@Override
+			public void onSucess(SessionSpec spec) {
+				ss = spec;
+				sem.release();
+			}
 
-		List<MediaSpec> mediaList = sessionSpecAnswerToProcess.getMedias();
+			@Override
+			public void onError(Throwable cause) {
+				fail("Error generating offer: " + cause.getMessage());
+			}
+		});
+
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
+		assertNotNull(ss);
+
+		List<MediaSpec> mediaList = ss.getMedias();
 		assertNotNull(mediaList);
 		assertTrue("Generated SessionSpec must have at least one MediaSpec.",
 				mediaList.size() > 0);
@@ -237,11 +299,19 @@ public class SdpPortManagerSdpNotAcceptableTest extends TestCaseBase {
 
 		// ///////////////////////////
 		// Process answer
-		sdpManager.processSdpAnswer(null);
-		event = listener.poll(WAIT_TIME);
-		assertNotNull(event);
-		assertEquals(SdpPortManagerEvent.SDP_NOT_ACCEPTABLE, event.getError());
-		assertNull(event.getEventType());
+		nc.processSessionSpecAnswer(null, new Continuation() {
+
+			@Override
+			public void onSucess(SessionSpec spec) {
+				fail("This process should fail");
+			}
+
+			@Override
+			public void onError(Throwable cause) {
+				sem.release();
+			}
+		});
+		assertTrue(sem.tryAcquire(WAIT_TIME, WAIT_UNIT));
 		// ///////////////////////////
 	}
 

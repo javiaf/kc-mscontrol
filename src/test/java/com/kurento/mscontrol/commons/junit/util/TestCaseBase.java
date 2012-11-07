@@ -6,8 +6,9 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kurento.commons.config.Parameters;
 import com.kurento.mscontrol.commons.MediaSession;
-import com.kurento.mscontrol.commons.networkconnection.NetworkConnection;
+import com.kurento.mscontrol.commons.NetworkConnection;
 
 public abstract class TestCaseBase extends TestCase {
 
@@ -29,7 +30,7 @@ public abstract class TestCaseBase extends TestCase {
 	protected void setUp() throws Exception {
 		MediaSession mediaSession = getMediaSession();
 		checkMediaSessionIsNotNull(mediaSession);
-		nc = mediaSession.createNetworkConnection();
+		nc = mediaSession.createNetworkConnection(new Parameters());
 		assertNotNull(nc);
 		super.setUp();
 	}
