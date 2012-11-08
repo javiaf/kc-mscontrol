@@ -29,16 +29,16 @@ public interface MediaSrc extends MediaStream {
 	 * 
 	 * @param sink
 	 *            The MediaSink that will accept this object media
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 */
-	public void connect(MediaSink sink) throws MediaSessionException;
+	public void connect(MediaSink sink) throws MediaException;
 
 	/**
 	 * Unlinks this element and sink
 	 * 
 	 * @param sink
 	 *            The MediaSink that will stop receiving media from this object
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 */
-	public void disconnect(MediaSink sink) throws MediaSessionException;
+	public void disconnect(MediaSink sink) throws MediaException;
 }

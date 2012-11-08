@@ -158,9 +158,9 @@ public abstract class NetworkConnection extends Joinable {
 	 * 
 	 * @throws java.lang.IllegalStateException
 	 *             if the container has been released
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 */
-	public abstract void confirm() throws MediaSessionException;
+	public abstract void confirm() throws MediaException;
 
 	/**
 	 * Request a SessionSpec offer.

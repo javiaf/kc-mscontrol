@@ -23,7 +23,6 @@ import com.kurento.mediaspec.Direction;
 
 /**
  * A Joinable is suitable for media composition.<br>
- * A Joinable object is either a NetworkConnection or a MediaComponent.<br>
  * Joinables can be joined/unjoined, to make the media stream flow between them.
  * Join operations can be limited both to a stream (i.e audio,video, see
  * {@link MediaType}) and direction (i.e. SEND, RECV, DUPLEX, see
@@ -71,11 +70,11 @@ public abstract class Joinable {
 	 * 
 	 * @param other
 	 *            Joinable object to connect
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 * @throws java.lang.IllegalStateException
 	 *             if the object has been released
 	 */
-	public void join(Joinable other) throws MediaSessionException {
+	public void join(Joinable other) throws MediaException {
 		boolean joined;
 
 		joined = joinSend(other);
@@ -83,12 +82,12 @@ public abstract class Joinable {
 		joined |= other.joinSend(this);
 
 		if (!joined) {
-			throw new MediaSessionException(
+			throw new MediaException(
 					"Unable to stablish at least one connection");
 		}
 	}
 
-	private boolean joinSend(Joinable other) throws MediaSessionException {
+	private boolean joinSend(Joinable other) throws MediaException {
 		boolean joined = false;
 		Collection<MediaSrc> srcs = getMediaSrcs();
 		Collection<MediaSink> sinks = other.getMediaSinks();
@@ -114,16 +113,16 @@ public abstract class Joinable {
 	 * 
 	 * @param other
 	 *            Joinable object to disconnect
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 * @throws java.lang.IllegalStateException
 	 *             if the object has been released
 	 */
-	public void unjoin(Joinable other) throws MediaSessionException {
+	public void unjoin(Joinable other) throws MediaException {
 		other.unjoinRecv(other);
 		unjoinRecv(this);
 	}
 
-	private void unjoinRecv(Joinable other) throws MediaSessionException {
+	private void unjoinRecv(Joinable other) throws MediaException {
 		Collection<MediaSrc> srcs = other.getMediaSrcs();
 		Collection<MediaSink> sinks = getMediaSinks();
 

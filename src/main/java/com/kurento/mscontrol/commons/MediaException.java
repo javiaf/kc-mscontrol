@@ -20,7 +20,7 @@ package com.kurento.mscontrol.commons;
 /**
  * General purpose exception.
  */
-public class MediaSessionException extends Exception {
+public class MediaException extends Exception {
 
 	private static final long serialVersionUID = 5114447844981856910L;
 
@@ -30,7 +30,7 @@ public class MediaSessionException extends Exception {
 	 * @param message
 	 *            the detail message
 	 */
-	public MediaSessionException(String message) {
+	public MediaException(String message) {
 		super(message);
 	}
 
@@ -42,7 +42,7 @@ public class MediaSessionException extends Exception {
 	 *            the detail message
 	 * @param cause
 	 */
-	public MediaSessionException(String message, Throwable cause) {
+	public MediaException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

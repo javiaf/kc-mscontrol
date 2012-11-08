@@ -49,9 +49,9 @@ public interface MediaStream {
 	 * Start media flow
 	 * </p>
 	 * 
-	 * @throws MediaSessionException
+	 * @throws MediaException
 	 */
-	public void start() throws MediaSessionException;
+	public void start() throws MediaException;
 
 	/**
 	 * 
