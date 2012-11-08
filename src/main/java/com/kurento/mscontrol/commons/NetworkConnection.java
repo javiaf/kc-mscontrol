@@ -17,7 +17,8 @@
 
 package com.kurento.mscontrol.commons;
 
-import com.kurento.commons.config.Parameters;
+import java.security.Policy.Parameters;
+
 import com.kurento.mediaspec.SessionSpec;
 
 /**
@@ -141,15 +142,6 @@ public abstract class NetworkConnection extends Joinable {
 
 	NetworkConnection() {
 	}
-
-	/**
-	 * This method allows to get information about the network connection, see
-	 * each platform documentation to know which information can be get.
-	 * 
-	 * @param params
-	 *            The parameters with the information to get
-	 */
-	public abstract void getInfo(Parameters params);
 
 	/**
 	 * Releases the resources associated to this NetworkConnection.

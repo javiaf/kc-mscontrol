@@ -58,11 +58,6 @@
 			<artifactId>kc-mediaspec</artifactId>
 			<version>${kc-mediaspec.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.kurento.commons</groupId>
-			<artifactId>kc-config</artifactId>
-			<version>${kc-config.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
