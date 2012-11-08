@@ -76,32 +76,33 @@ public abstract class Joinable {
 	 *             if the object has been released
 	 */
 	public void join(Joinable other) throws MediaSessionException {
-		boolean joined = false;
+		boolean joined;
 
-		Collection<MediaSrc> srcs = getMediaSrcs();
-		Collection<MediaSink> sinks = other.getMediaSinks();
+		joined = joinSend(other);
 
-		for (MediaSrc src : srcs) {
-			for (MediaSink sink : sinks) {
-				src.connect(sink);
-				joined = true;
-			}
-		}
-
-		srcs = other.getMediaSrcs();
-		sinks = getMediaSinks();
-
-		for (MediaSrc src : srcs) {
-			for (MediaSink sink : sinks) {
-				src.connect(sink);
-				joined = true;
-			}
-		}
+		joined |= other.joinSend(this);
 
 		if (!joined) {
 			throw new MediaSessionException(
 					"Unable to stablish at least one connection");
 		}
+	}
+
+	private boolean joinSend(Joinable other) throws MediaSessionException {
+		boolean joined = false;
+		Collection<MediaSrc> srcs = getMediaSrcs();
+		Collection<MediaSink> sinks = other.getMediaSinks();
+
+		for (MediaSrc src : srcs) {
+			for (MediaSink sink : sinks) {
+				if (src.getMediaType().equals(sink.getMediaType())) {
+					src.connect(sink);
+					joined = true;
+				}
+			}
+		}
+
+		return joined;
 	}
 
 	/**
