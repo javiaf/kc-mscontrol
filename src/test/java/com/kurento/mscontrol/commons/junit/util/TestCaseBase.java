@@ -1,36 +1,31 @@
 package com.kurento.mscontrol.commons.junit.util;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.kurento.commons.config.Parameters;
-import com.kurento.mscontrol.commons.MediaSession;
 import com.kurento.mscontrol.commons.NetworkConnection;
 
-public abstract class TestCaseBase extends TestCase {
+public class TestCaseBase extends TestCase {
 
 	protected static final Logger log = LoggerFactory
 			.getLogger("KcMsControlTests");
 
-	private static MediaSession mediaSession = null;
+	protected static NetworkConnectionFactory factory;
+
 	protected static NetworkConnection nc = null;
 
-	public static MediaSession getMediaSession() {
-		return mediaSession;
-	}
-
-	public static void setMediaSession(MediaSession mediaSession) {
-		TestCaseBase.mediaSession = mediaSession;
+	public static void setFactory(NetworkConnectionFactory factory) {
+		TestCaseBase.factory = factory;
 	}
 
 	@Override
 	protected void setUp() throws Exception {
-		MediaSession mediaSession = getMediaSession();
-		checkMediaSessionIsNotNull(mediaSession);
-		nc = mediaSession.createNetworkConnection(new Parameters());
+		assertNotNull(
+				"Before starting the test you should set a NetworkConnectionFactory",
+				factory);
+		nc = factory.getNetworkConnection();
 		assertNotNull(nc);
 		super.setUp();
 	}
@@ -39,12 +34,6 @@ public abstract class TestCaseBase extends TestCase {
 	protected void tearDown() throws Exception {
 		nc.release();
 		super.tearDown();
-	}
-
-	protected void checkMediaSessionIsNotNull(MediaSession mediaSession) {
-		Assert.assertNotNull(
-				"mediaSession is null, it must be assigned using setMediaSession() static method",
-				mediaSession);
 	}
 
 }

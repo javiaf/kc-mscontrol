@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
-import com.kurento.mscontrol.commons.MediaSession;
 import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
@@ -74,7 +72,7 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 		}
 
 		nc.release();
-		nc = getMediaSession().createNetworkConnection(new Parameters());
+		nc = factory.getNetworkConnection();
 		// ///////////////////////////
 
 		mediaList = ss.getMedias();
@@ -126,7 +124,7 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 
 		ss = null;
 		nc.release();
-		nc = getMediaSession().createNetworkConnection(new Parameters());
+		nc = factory.getNetworkConnection();
 
 		nc.processSessionSpecOffer(null, new Continuation() {
 
@@ -173,7 +171,7 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 
 		ss = null;
 		nc.release();
-		nc = getMediaSession().createNetworkConnection(new Parameters());
+		nc = factory.getNetworkConnection();
 
 		// ///////////////////////////
 		// Generate a SessionSpec as offer.
@@ -263,7 +261,7 @@ public class NetworkConnectionNotAcceptableTest extends TestCaseBase {
 
 		ss = null;
 		nc.release();
-		nc = getMediaSession().createNetworkConnection(new Parameters());
+		nc = factory.getNetworkConnection();
 
 		// ///////////////////////////
 		// Generate offer

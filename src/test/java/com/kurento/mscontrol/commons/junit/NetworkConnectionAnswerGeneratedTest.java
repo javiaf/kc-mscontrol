@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
-import com.kurento.mscontrol.commons.MediaSession;
 import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;

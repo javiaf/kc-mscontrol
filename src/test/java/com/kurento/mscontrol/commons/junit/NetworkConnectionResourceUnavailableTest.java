@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import com.kurento.commons.config.Parameters;
 import com.kurento.mediaspec.MediaSpec;
 import com.kurento.mediaspec.Payload;
 import com.kurento.mediaspec.SessionSpec;
-import com.kurento.mscontrol.commons.MediaSession;
 import com.kurento.mscontrol.commons.NetworkConnection;
 import com.kurento.mscontrol.commons.NetworkConnection.Continuation;
 import com.kurento.mscontrol.commons.junit.util.TestCaseBase;
@@ -131,7 +129,7 @@ public class NetworkConnectionResourceUnavailableTest extends TestCaseBase {
 	public void testProcessOffer() throws Exception {
 		ss = null;
 		nc.release();
-		nc = getMediaSession().createNetworkConnection(new Parameters());
+		nc = factory.getNetworkConnection();
 
 		final Semaphore sem = new Semaphore(0);
 

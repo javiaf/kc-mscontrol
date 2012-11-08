@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kurento.mscontrol.commons.internal;
+package com.kurento.mscontrol.commons;
 
-import com.kurento.mscontrol.commons.MediaSessionException;
-import com.kurento.mscontrol.commons.MediaType;
+import com.kurento.mediaspec.MediaType;
 
 
 /**
@@ -28,17 +27,22 @@ import com.kurento.mscontrol.commons.MediaType;
  * Treatment of media is dependent of implementation.
  * </p>
  * 
- * @param <T>
- *            The stream MediaType
  */
-public interface MediaStream<T extends MediaType> {
+public interface MediaStream {
+
+	/**
+	 * Gets the Joinable that contains this MediaStream
+	 * 
+	 * @return The parent Joinable
+	 */
+	public Joinable getJoinable();
 
 	/**
 	 * Gets the current MediaType
 	 * 
 	 * @return a MediaType specification that represents the current MediaType
 	 */
-	public T getMediaType();
+	public MediaType getMediaType();
 
 	/**
 	 * <p>
@@ -57,4 +61,8 @@ public interface MediaStream<T extends MediaType> {
 	 */
 	public void stop();
 
+	/**
+	 * Releases all resources
+	 */
+	public void release();
 }

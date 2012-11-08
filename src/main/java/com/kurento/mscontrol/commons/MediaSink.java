@@ -17,33 +17,17 @@
 
 package com.kurento.mscontrol.commons;
 
+
 /**
- * Defines the media types of a media stream
+ * A MediaSink receives media from a connected MediaSrc (if any)
  * 
  */
-public class MediaType {
+public interface MediaSink extends MediaStream {
 
 	/**
-	 * Audio media type
+	 * Returns the Joined MediaSrc or null if not joined
+	 * 
+	 * @return The joined MediaSrc or null if not joined
 	 */
-	public static MediaType AUDIO = new MediaType() {
-			@Override
-			public String toString() {
-				return "AUDIO";
-			}
-	};
-
-	/**
-	 * Video media type
-	 */
-	public static MediaType VIDEO = new MediaType() {
-		@Override
-		public String toString() {
-			return "VIDEO";
-		}
-	};
-
-	MediaType() {
-
-	}
+	public MediaSrc getConnectedSrc();
 }

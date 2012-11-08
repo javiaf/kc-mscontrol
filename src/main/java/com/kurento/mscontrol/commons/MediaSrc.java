@@ -17,25 +17,28 @@
 
 package com.kurento.mscontrol.commons;
 
-import com.kurento.commons.config.Parameters;
 
 /**
- * This class is the entry point where a MediaSession can be obtained
+ * MediaSrc sends media to one of more MediaSink if linked
  * 
  */
-public interface MediaSessionFactory {
+public interface MediaSrc extends MediaStream {
 
 	/**
-	 * Creates a new mediaSession object using the given configuration
-	 * parameters. See platform documentation for further details about the
-	 * parameters.
+	 * Creates a link between this object and the given sink
 	 * 
-	 * @param parameters
-	 *            The configuration of the MediaSession
-	 * @return New media session for a platform
+	 * @param sink
+	 *            The MediaSink that will accept this object media
 	 * @throws MediaSessionException
 	 */
-	public MediaSession createMediaSession(Parameters parameters)
-			throws MediaSessionException;
+	public void connect(MediaSink sink) throws MediaSessionException;
 
+	/**
+	 * Unlinks this element and sink
+	 * 
+	 * @param sink
+	 *            The MediaSink that will stop receiving media from this object
+	 * @throws MediaSessionException
+	 */
+	public void disconnect(MediaSink sink) throws MediaSessionException;
 }
